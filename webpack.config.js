@@ -24,7 +24,13 @@ module.exports = {
     }),
   ],
   resolve: {
+    alias: {
+      "@src": path.resolve(__dirname, "src")
+    },
+    preferAbsolute: true,
     extensions: ['.tsx', '.ts', '.js'],
+    // modules: [options.paths.src, "node_modules"],
+    // mainFiles: ["index"]
   },
   module: {
     rules: [
@@ -34,13 +40,15 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(?:js|mjs|cjs|jsx|tsx)$/,
+        test: /\.(?:js|mjs|cjs|jsx|tsx|ts)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             targets: "defaults",
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: [
+              '@babel/preset-env', 
+            ],
           }
         }
       }
