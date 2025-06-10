@@ -5,7 +5,7 @@
     "module": "ESNext",
     "baseUrl": ".",
     "paths": {
-      "@src": ["./src/*"]
+      "@/*": ["./src/*"]
     },
     "target": "ES5",
     "lib": [

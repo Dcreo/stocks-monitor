@@ -1,3 +1,6 @@
-import counterReducer from "./model/slice/counterSlice";
+import counterReducer, { increment } from "./model/slice/counterSlice";
 
-export { counterReducer }
+export { 
+  counterReducer,
+  increment
+}
