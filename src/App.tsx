@@ -1,23 +1,23 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { increment } from "@/entities/Counter";
-import { StateSchema } from "@/app/providers";
+import { Stock, useGetStocksQuery } from "@/entities/Stock";
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const counterValue = useSelector((state: StateSchema) => state.counter.value); 
+  const { data, error, isLoading } = useGetStocksQuery();
 
-  const incrementHandler = () => {
-    dispatch(increment());
-  }
+  if (error) return <h2>Error</h2>;
+  if (isLoading) return <h2>Data Loading</h2>
 
   return(
     <div>
       <h1>Stocks Monitor</h1>
 
-      { counterValue }
-
-      <button onClick={incrementHandler}>Increment</button>
+      {data && (
+        data.map((stock: Stock) => {
+          return(
+            <div>{ stock.name }</div>
+          )
+        })
+      )}
     </div>
   )
 }

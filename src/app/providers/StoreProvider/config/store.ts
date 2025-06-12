@@ -1,9 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 // TODO root paths
 import { counterReducer } from "../../../../entities/Counter";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { stocksApi } from "@/entities/Stock";
 
-export default configureStore({
+const store = configureStore({
   reducer: {
-    counter: counterReducer
-  }
+    counter: counterReducer,
+    [stocksApi.reducerPath]: stocksApi.reducer
+  },
+  //@ts-ignore
+  middleware: (getDefaultMiddleware) => (getDefaultMiddleware().concat(stocksApi.middleware))
 })
+
+setupListeners(store.dispatch);
+
+export default store;
