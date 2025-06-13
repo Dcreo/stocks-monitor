@@ -1,4 +1,4 @@
-import { memo, ReactNode } from "react";
+import { memo, ReactNode, MouseEvent } from "react";
 import { classNames, Mods } from "@/shared/lib";
 import * as styles from "./Modal.module.scss";
 
@@ -17,10 +17,11 @@ export const Modal = (props: ModalProps) => {
     onClose
   } = props;
 
-  const onCloseHandler = () => {
+  const onCloseHandler = (e: MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     if (onClose) onClose();
   }
-
+  
   const mods: Mods = {
     [styles.closed]: !isOpen,
   } 
@@ -28,7 +29,7 @@ export const Modal = (props: ModalProps) => {
   return(
     <div className={classNames(styles.Modal, mods, [className])}>
       <div className={styles.overlay} onClick={onCloseHandler}>
-        <div className={styles.content}>
+        <div className={styles.content} onClick={(e) => e.stopPropagation()}>
           {children}
         </div>
       </div>

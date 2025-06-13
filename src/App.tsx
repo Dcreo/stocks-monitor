@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Stock, useGetStocksQuery } from "@/entities/Stock";
-import { Modal } from "@/shared/ui";
+import { LoginModal } from "@/features/auth/jwt";
 
 export const App = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -22,9 +22,7 @@ export const App = () => {
     <div>
       <h1>Stocks Monitor</h1>
 
-      <span onClick={modalOpenHandler}>Open modal</span>
-
-      <Modal isOpen={modalIsOpen} onClose={modalClosehandler} />
+      <LoginModal />
 
       {data && (
         data.map((stock: Stock) => {
