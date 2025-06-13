@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Stock, useGetStocksQuery } from "@/entities/Stock";
 import { LoginModal } from "@/features/auth/jwt";
+import { StocksList } from "@/entities/Stock";
 
 export const App = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -20,17 +21,9 @@ export const App = () => {
 
   return(
     <div>
-      <h1>Stocks Monitor</h1>
-
       <LoginModal />
-
-      {data && (
-        data.map((stock: Stock) => {
-          return(
-            <div>{ stock.name }</div>
-          )
-        })
-      )}
+      <h1>Stocks Monitor</h1>
+      <StocksList stocks={data as Stock[]} />
     </div>
   )
 }
