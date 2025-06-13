@@ -1,5 +1,6 @@
 import React from "react";
 import { Stock, useGetStocksQuery } from "@/entities/Stock";
+import { Modal } from "@/shared/ui";
 
 export const App = () => {
   const { data, error, isLoading } = useGetStocksQuery();
@@ -10,6 +11,8 @@ export const App = () => {
   return(
     <div>
       <h1>Stocks Monitor</h1>
+
+      <Modal />
 
       {data && (
         data.map((stock: Stock) => {
