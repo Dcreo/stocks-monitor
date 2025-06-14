@@ -1,3 +1,15 @@
 .LoginForm {
   /**/
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px 20px 20px;
+}
+
+.button {
+  max-width: 200px;
+  height: 40px;
+}
