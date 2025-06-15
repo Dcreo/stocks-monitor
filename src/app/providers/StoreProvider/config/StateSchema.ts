@@ -1,5 +1,9 @@
-import { CounterSchema } from "@/entities/Counter/model/types/CounterSchema";
+import { stocksApi } from "@/entities/Stock";
+import { usersApi } from "@/entities/User";
+import { JWTAuthSchema } from "@/features/auth/jwt";
 
 export interface StateSchema {
-  counter: CounterSchema;
+  jwt_auth: JWTAuthSchema;
+  [stocksApi.reducerPath]: any; 
+  [usersApi.reducerPath]: any;
 }

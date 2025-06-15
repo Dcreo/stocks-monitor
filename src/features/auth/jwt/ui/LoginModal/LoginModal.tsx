@@ -11,13 +11,8 @@ interface LoginModalProps {
 export const LoginModal = ({ className }: LoginModalProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const clickHandler = () => {
-    setIsOpen(true);
-  } 
-
-  const onCloseHandler = () => {
-    setIsOpen(false);
-  }
+  const clickHandler = () => setIsOpen(true); 
+  const onCloseHandler = () => setIsOpen(false);
 
   return(
     <>

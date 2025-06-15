@@ -7,6 +7,7 @@ interface ModalProps {
   children?: ReactNode; 
   isOpen?: boolean;
   onClose?: () => void;
+  lazy?: boolean;
 }
 
 export const Modal = (props: ModalProps) => {
@@ -14,7 +15,8 @@ export const Modal = (props: ModalProps) => {
     isOpen, 
     className, 
     children,
-    onClose
+    lazy = true,
+    onClose,
   } = props;
 
   const onCloseHandler = (e: MouseEvent<HTMLElement>) => {
@@ -25,6 +27,8 @@ export const Modal = (props: ModalProps) => {
   const mods: Mods = {
     [styles.closed]: !isOpen,
   } 
+
+  if (lazy && !isOpen) return null;
 
   return(
     <div className={classNames(styles.Modal, mods, [className])}>

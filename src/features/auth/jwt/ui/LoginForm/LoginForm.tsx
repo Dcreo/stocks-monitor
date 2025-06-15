@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useEffect } from "react";
 import { classNames } from "@/shared/lib";
 import * as styles from "./LoginForm.module.scss";
 import TextField from "@mui/material/TextField";
@@ -10,23 +10,40 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from "@mui/material/FormControl";
+import { RandomUser, User } from "@/entities/User";
+import { useGetRandomUserQuery } from "@/entities/User/services/usersApi";
+import { inputClasses } from "@mui/material/Input";
 
 interface LoginFormProps {
-  className?: string
+  className?: string;
 }
 
 export const LoginForm = ({ className }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [randomUser, setRandomUser] = useState<RandomUser>();
+  const { data, error, isFetching } = useGetRandomUserQuery(undefined,{
+    refetchOnMountOrArgChange: true
+  })
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleMouseDownPassword = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
   };
 
-  const handleMouseUpPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleMouseUpPassword = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
   };
+
+  useEffect(() => {
+    setRandomUser(data);
+  }, [data]);
+
+  useEffect(() => {
+    setRandomUser({ username: "", password: ""} as RandomUser);
+  }, []);
+
+  if (error) return <div>Error</div>
 
   return(
     <div className={classNames(styles.LoginForm, {}, [className])}>
@@ -34,14 +51,25 @@ export const LoginForm = ({ className }: LoginFormProps) => {
         <TextField 
           label="Username" 
           variant="outlined" 
+          key={randomUser?.username}
+          disabled={isFetching}
+          defaultValue={randomUser?.username}
+          className={String(isFetching && styles.disabledInput)}
         />
 
-       <FormControl variant="outlined">
-         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-         <OutlinedInput
-           id="outlined-adornment-password"
-           type={showPassword ? 'text' : 'password'}
-           endAdornment={
+        <FormControl variant="outlined">
+          <InputLabel 
+            className={String(isFetching && styles.disabledLabel)}
+            htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            className={String(isFetching && styles.disabledInput)}
+            key={randomUser?.password}
+            defaultValue={randomUser?.password}
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
               <InputAdornment position="end">
                 <IconButton
                   aria-label={
@@ -57,11 +85,14 @@ export const LoginForm = ({ className }: LoginFormProps) => {
               </InputAdornment>
             }
             label="Password"
-          />
+            disabled={isFetching}
+         />
         </FormControl>
 
         <Button 
           variant="outlined" 
+          loading={isFetching}
+          loadingPosition="start"
           className={styles.button}>
           Log in
         </Button>
