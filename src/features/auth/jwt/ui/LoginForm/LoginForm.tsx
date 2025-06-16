@@ -2,7 +2,7 @@ import { useState, MouseEvent, useEffect } from "react";
 import { classNames } from "@/shared/lib";
 import * as styles from "./LoginForm.module.scss";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { Button } from "@/shared/ui";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -90,9 +90,6 @@ export const LoginForm = ({ className }: LoginFormProps) => {
         </FormControl>
 
         <Button 
-          variant="outlined" 
-          loading={isFetching}
-          loadingPosition="start"
           className={styles.button}>
           Log in
         </Button>
