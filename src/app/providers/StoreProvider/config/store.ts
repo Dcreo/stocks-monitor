@@ -5,17 +5,24 @@ import { stocksApi } from "@/entities/Stock";
 import { StateSchema } from "./StateSchema";
 import { jwtAuthReducer } from "@/features/auth/jwt";
 import { usersApi } from "@/entities/User";
+import { jwtAuthApi } from "@/features/auth/jwt";
 
 const store = configureStore<StateSchema>({
   reducer: {
-    jwt_auth: jwtAuthReducer,   
+    //@ts-ignore
+    jwtAuth: jwtAuthReducer,   
     [stocksApi.reducerPath]: stocksApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [jwtAuthApi.reducerPath]: jwtAuthApi.reducer,
   },
   //@ts-ignore
-  middleware: (getDefaultMiddleware) => (getDefaultMiddleware().concat(stocksApi.middleware, 
-                                                                       usersApi.middleware,
-                                                                      ))
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(
+      stocksApi.middleware, 
+      usersApi.middleware,
+      jwtAuthApi.middleware,
+    )
+  }
 })
 
 setupListeners(store.dispatch);

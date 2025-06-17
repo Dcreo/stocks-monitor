@@ -10,12 +10,16 @@ interface ButtonProps {
   className?: string;
   theme?: ButtonTheme;
   children: ReactNode;
+  isLoading?: boolean;
+  loadingText?: string;
 }
 
 export const Button = (props: ButtonProps) => {
   const {
     className,
     children,
+    isLoading,
+    loadingText = "Loading...",
     theme = ButtonTheme.OUTLINE
   } = props;
 
@@ -25,7 +29,7 @@ export const Button = (props: ButtonProps) => {
 
   return(
     <div className={classNames(styles.Button, mods, [className])}>
-      { children }
+      { (isLoading && loadingText) || children }
     </div>
   )
 }

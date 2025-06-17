@@ -9,7 +9,7 @@ export const usersApi = createApi({
   endpoints: (build) => ({
     getRandomUser: build.query<User, undefined>({ 
       query: () => "users/random",
-    })
+    }),
   })
 })
 

@@ -1,5 +1,6 @@
 import { useState, MouseEvent, useEffect } from "react";
 import { classNames } from "@/shared/lib";
+import { useDispatch } from "react-redux";
 import * as styles from "./LoginForm.module.scss";
 import TextField from "@mui/material/TextField";
 import { Button } from "@/shared/ui";
@@ -13,6 +14,8 @@ import FormControl from "@mui/material/FormControl";
 import { RandomUser, User } from "@/entities/User";
 import { useGetRandomUserQuery } from "@/entities/User/services/usersApi";
 import { inputClasses } from "@mui/material/Input";
+import { useLoginMutation } from "../../model/services/jwtAuthApi";
+import { JWTLoginData } from "../../model/types/JWTAuthSchema";
 
 interface LoginFormProps {
   className?: string;
@@ -24,6 +27,9 @@ export const LoginForm = ({ className }: LoginFormProps) => {
   const { data, error, isFetching } = useGetRandomUserQuery(undefined,{
     refetchOnMountOrArgChange: true
   })
+  const [login, {data: authData, isSuccess: isLoginSuccess, isError, error: loginError}] = useLoginMutation();
+
+  const dispath = useDispatch();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -34,6 +40,12 @@ export const LoginForm = ({ className }: LoginFormProps) => {
   const handleMouseUpPassword = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
+
+  useEffect(() => {
+    if (randomUser?.username) {
+      login(randomUser as JWTLoginData);
+    }
+  }, [randomUser]);
 
   useEffect(() => {
     setRandomUser(data);
@@ -90,6 +102,8 @@ export const LoginForm = ({ className }: LoginFormProps) => {
         </FormControl>
 
         <Button 
+          isLoading={isFetching}
+          loadingText={"Loading data..."}
           className={styles.button}>
           Log in
         </Button>

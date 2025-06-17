@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { JWTAuthSchema } from "../types/JWTAuthSchema";
+import { JWTAuthData } from "../types/JWTAuthSchema";
 
 export const jwtAuthSlice = createSlice({
-  name: 'jwt_auth',
+  name: 'jwtAuth',
   initialState: {
-    username: "",
-    password: "",
+    jwtToken: null,
+    user: null
   },
   reducers: {
-    setUsername: (state, action: PayloadAction<string>) => {
-      state.username = action.payload;
+    setAuthData: (state, action: PayloadAction<JWTAuthData>) => {
+      console.warn("AUTH DATA", action.payload);
     }
   }
 })
 
-export const {  } = jwtAuthSlice.actions
+export const { setAuthData } = jwtAuthSlice.actions
 
 export default jwtAuthSlice.reducer
