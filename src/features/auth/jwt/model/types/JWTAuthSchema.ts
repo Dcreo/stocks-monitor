@@ -1,9 +1,9 @@
 import { User } from "@/entities/User";
 
 export interface JWTAuthData {
-  jwtToken: string | null;
-  expiresAt: string;
-  user: User | null;
+  jwtToken: string;
+  timestamp: number;
+  user: User;
 }
 
 export interface JWTLoginData {

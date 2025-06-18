@@ -12,6 +12,7 @@ interface ButtonProps {
   children: ReactNode;
   isLoading?: boolean;
   loadingText?: string;
+  onClick?: () => void;
 }
 
 export const Button = (props: ButtonProps) => {
@@ -20,7 +21,8 @@ export const Button = (props: ButtonProps) => {
     children,
     isLoading,
     loadingText = "Loading...",
-    theme = ButtonTheme.OUTLINE
+    theme = ButtonTheme.OUTLINE,
+    onClick, // TODO extend base events
   } = props;
 
   const mods: Mods = {
@@ -28,7 +30,7 @@ export const Button = (props: ButtonProps) => {
   }
 
   return(
-    <div className={classNames(styles.Button, mods, [className])}>
+    <div className={classNames(styles.Button, mods, [className])} onClick={onClick}>
       { (isLoading && loadingText) || children }
     </div>
   )

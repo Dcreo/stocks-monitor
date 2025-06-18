@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { JWTLoginData } from "../types/JWTAuthSchema";
+import { JWTAuthData, JWTLoginData } from "../types/JWTAuthSchema";
 
 export const jwtAuthApi = createApi({
   reducerPath: "jwtAuthApi",
@@ -15,6 +15,18 @@ export const jwtAuthApi = createApi({
           body
         }
       },
+      transformResponse: (response, meta, arg) => {
+        console.warn("RESPONSE", response);
+        if (meta?.response?.status != 200) return response; 
+
+        const data: JWTAuthData = {
+          jwtToken: response.token,
+          timestamp: response.expires_at,
+          user: response.user
+        }
+
+        return data;
+      }
     }),
   })
 })

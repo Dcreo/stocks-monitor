@@ -16,7 +16,7 @@ export const LoginModal = ({ className }: LoginModalProps) => {
 
   return(
     <>
-      <span onClick={clickHandler}>Login</span>
+      <span onClick={clickHandler} className={styles.login}>Login</span>
       <Modal 
         className={classNames(styles.LoginModal, {}, [className])} 
         isOpen={isOpen}

@@ -16,6 +16,8 @@ import { useGetRandomUserQuery } from "@/entities/User/services/usersApi";
 import { inputClasses } from "@mui/material/Input";
 import { useLoginMutation } from "../../model/services/jwtAuthApi";
 import { JWTLoginData } from "../../model/types/JWTAuthSchema";
+import { setAuthData } from "../../model/slice/jwtAuthSlice";
+import { useAppDispatch } from "@/shared/hooks";
 
 interface LoginFormProps {
   className?: string;
@@ -29,7 +31,7 @@ export const LoginForm = ({ className }: LoginFormProps) => {
   })
   const [login, {data: authData, isSuccess: isLoginSuccess, isError, error: loginError}] = useLoginMutation();
 
-  const dispath = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -40,12 +42,17 @@ export const LoginForm = ({ className }: LoginFormProps) => {
   const handleMouseUpPassword = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
+  
+  const loginHandler = () => {
+    login(randomUser as JWTLoginData);
+  }
 
   useEffect(() => {
-    if (randomUser?.username) {
-      login(randomUser as JWTLoginData);
+    if (authData?.jwtToken) {
+      console.warn('DISPTCH STORE')
+      dispatch(setAuthData(authData));
     }
-  }, [randomUser]);
+  }, [isLoginSuccess]);
 
   useEffect(() => {
     setRandomUser(data);
@@ -104,7 +111,8 @@ export const LoginForm = ({ className }: LoginFormProps) => {
         <Button 
           isLoading={isFetching}
           loadingText={"Loading data..."}
-          className={styles.button}>
+          className={styles.button}
+          onClick={loginHandler}>
           Log in
         </Button>
       </form>
