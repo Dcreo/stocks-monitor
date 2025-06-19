@@ -1,6 +1,5 @@
 import { useState, MouseEvent, useEffect } from "react";
 import { classNames } from "@/shared/lib";
-import { useDispatch } from "react-redux";
 import * as styles from "./LoginForm.module.scss";
 import TextField from "@mui/material/TextField";
 import { Button } from "@/shared/ui";
@@ -13,7 +12,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormControl from "@mui/material/FormControl";
 import { RandomUser, User } from "@/entities/User";
 import { useGetRandomUserQuery } from "@/entities/User/services/usersApi";
-import { inputClasses } from "@mui/material/Input";
 import { useLoginMutation } from "../../model/services/jwtAuthApi";
 import { JWTLoginData } from "../../model/types/JWTAuthSchema";
 import { setAuthData } from "../../model/slice/jwtAuthSlice";

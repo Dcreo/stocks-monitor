@@ -12,10 +12,14 @@ export const jwtAuthSlice = createSlice({
       }
 
       return {...state, ...action.payload}
+    },
+    resetAuthData: (state, action: PayloadAction<void>) => {
+      localStorage.removeItem("authData");
+      return {...state, ...{}}
     }
   }
 })
 
-export const { setAuthData } = jwtAuthSlice.actions
+export const { setAuthData, resetAuthData } = jwtAuthSlice.actions
 
 export default jwtAuthSlice.reducer

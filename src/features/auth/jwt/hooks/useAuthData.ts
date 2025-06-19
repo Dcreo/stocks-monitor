@@ -1,7 +1,7 @@
 import { getAuthData, JWTAuthData } from "@/features/auth/jwt"
 import { useAppSelector } from "@/shared/hooks/Store/Store";
 
-export const useAuth = () => {
+export const useAuthData = () => {
   const { user } = useAppSelector(getAuthData); 
 
   const isLoggedIn = user?.username?.length
