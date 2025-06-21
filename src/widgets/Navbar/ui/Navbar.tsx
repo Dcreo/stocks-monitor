@@ -12,13 +12,13 @@ export const Navbar = ({ className }: NavbarProps) => {
 
   return(
     <div className={classNames(styles.Navbar, {}, [className])}>
-      { !isLoggedIn && <LoginModal /> }
-      { isLoggedIn && (
-        <>
-          <div>{username}</div>
-          <NavLink to="/dashboard">Dashboard</NavLink>
-        </>
-      )}
+      <div className={styles.menu}>
+        <NavLink to="/">Main page</NavLink>
+        <NavLink to="/dashboard">Dashboard</NavLink>
+      </div>
+      <div className={styles.userInfo}>
+        { !isLoggedIn ? <LoginModal /> : username }
+      </div>
     </div>
   )
 }
