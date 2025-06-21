@@ -3,6 +3,8 @@ import { Stock, useGetStocksQuery } from "@/entities/Stock";
 import { StocksList } from "@/entities/Stock";
 import { Navbar } from "@/widgets/Navbar";
 import { useInitAuthData } from "@/features/auth/jwt/hooks/useInitAuthData";
+import { AppRouter } from "@/app/providers/RouterProvider";
+import { NavLink } from "react-router-dom";
 
 export const App = () => {
   // TODO transfer to component
@@ -16,7 +18,7 @@ export const App = () => {
     <div>
       <Navbar />
       <h1>Stocks Monitor</h1>
-      <StocksList stocks={data as Stock[]} />
+      <AppRouter />
     </div>
   )
 }
