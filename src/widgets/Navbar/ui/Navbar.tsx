@@ -2,19 +2,20 @@ import { LoginModal, useAuthData } from "@/features/auth/jwt";
 import { classNames } from "@/shared/lib";
 import * as styles from "./Navbar.module.scss";
 import { NavLink } from "react-router-dom";
+import { RouteName, RoutePath } from "@/shared/config";
 
 interface NavbarProps {
   className?: string
 }
 
 export const Navbar = ({ className }: NavbarProps) => {
-  const { isLoggedIn, username, logout } = useAuthData();
+  const { isLoggedIn, username, logout, authorize } = useAuthData();
 
   return(
     <div className={classNames(styles.Navbar, {}, [className])}>
       <div className={styles.menu}>
-        <NavLink to="/">Main page</NavLink>
-        <NavLink to="/dashboard">Dashboard</NavLink>
+        {authorize?.can(RouteName.ROOT) && <NavLink to={RoutePath.ROOT}>Main page</NavLink>}
+        {authorize?.can(RouteName.DASHBOARD) && <NavLink to={RoutePath.DASHBOARD}>Dashboard</NavLink>}
       </div>
       <div className={styles.userInfo}>
         <div>

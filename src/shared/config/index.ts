@@ -1,1 +1,2 @@
-export { type RouteItem, type RoutePath, routes } from "./routes/routes";
+export { type RouteItem, RoutePath, RouteName, routes } from "./routes/routes";
+export { Authorize } from "./authorize/authorize";

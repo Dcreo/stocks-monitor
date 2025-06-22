@@ -14,15 +14,18 @@ export enum RoutePath {
 export interface RouteItem {
   path: RoutePath;
   element: ReactNode;
+  auth: boolean;
 }
 
 export const routes: Record<RouteName, RouteItem> = {
   [RouteName.ROOT]: {
     path: RoutePath.ROOT,
-    element: <MainPage />
+    element: <MainPage />,
+    auth: false
   },
   [RouteName.DASHBOARD]: {
     path: RoutePath.DASHBOARD,
-    element: <DashboardPage />
+    element: <DashboardPage />,
+    auth: true
   }
 } 
