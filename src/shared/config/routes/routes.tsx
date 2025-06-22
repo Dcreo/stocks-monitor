@@ -1,14 +1,16 @@
 import React, { ReactNode } from "react";
-import { MainPage, DashboardPage } from "@/pages";
+import { MainPage, DashboardPage, NotFoundPage } from "@/pages";
 
 export enum RouteName {
   ROOT = "root",
-  DASHBOARD = "dashboard"
+  DASHBOARD = "dashboard",
+  NOT_FOUND = "not_found"
 }
 
 export enum RoutePath {
   ROOT = "/",
-  DASHBOARD = "/dashboard"
+  DASHBOARD = "/dashboard",
+  NOT_FOUND = "*"
 }
 
 export interface RouteItem {
@@ -27,5 +29,10 @@ export const routes: Record<RouteName, RouteItem> = {
     path: RoutePath.DASHBOARD,
     element: <DashboardPage />,
     auth: true
+  },
+  [RouteName.NOT_FOUND]: {
+    path: RoutePath.NOT_FOUND,
+    element: <NotFoundPage />,
+    auth: false
   }
 } 

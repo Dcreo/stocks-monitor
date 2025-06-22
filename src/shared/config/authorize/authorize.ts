@@ -26,7 +26,6 @@ export class Authorize {
           this.authorizedResources.push(routeName as RouteName)
         }
       }
-
     })
   }
 
