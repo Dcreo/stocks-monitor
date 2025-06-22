@@ -3,6 +3,8 @@ import { classNames } from "@/shared/lib";
 import * as styles from "./Navbar.module.scss";
 import { NavLink } from "react-router-dom";
 import { RouteName, RoutePath } from "@/shared/config";
+import { menuItems, MenuRouteName } from "../config/menuItems";
+import { ReactNode } from "react";
 
 interface NavbarProps {
   className?: string
@@ -11,11 +13,22 @@ interface NavbarProps {
 export const Navbar = ({ className }: NavbarProps) => {
   const { isLoggedIn, username, logout, authorize } = useAuthData();
 
+  const MenuItems = () => {
+    const items: ReactNode[] = Object.keys(menuItems).map((routeName) => {
+      const menuItem = menuItems[routeName as MenuRouteName];
+
+      return(
+        <>{authorize?.can(routeName as RouteName) && <NavLink to={menuItem.path}>{menuItem.text}</NavLink>}</>
+      )
+    })
+
+    return items; 
+  }
+
   return(
     <div className={classNames(styles.Navbar, {}, [className])}>
       <div className={styles.menu}>
-        {authorize?.can(RouteName.ROOT) && <NavLink to={RoutePath.ROOT}>Main page</NavLink>}
-        {authorize?.can(RouteName.DASHBOARD) && <NavLink to={RoutePath.DASHBOARD}>Dashboard</NavLink>}
+        <MenuItems />
       </div>
       <div className={styles.userInfo}>
         <div>

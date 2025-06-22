@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { JWTAuthData } from "../types/JWTAuthSchema";
-import { User } from "@/entities/User";
 
 export const jwtAuthSlice = createSlice({
   name: 'jwtAuth',
@@ -13,7 +12,7 @@ export const jwtAuthSlice = createSlice({
 
       return {...state, ...action.payload}
     },
-    resetAuthData: (state, action: PayloadAction<void>) => {
+    resetAuthData: (state) => {
       localStorage.removeItem("authData");
       return {...state, ...{}}
     }
