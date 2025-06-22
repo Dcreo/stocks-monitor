@@ -12,5 +12,12 @@
 }
 
 .userInfo {
-  /**/
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logout {
+  cursor: pointer;
+  color: blue;
 }

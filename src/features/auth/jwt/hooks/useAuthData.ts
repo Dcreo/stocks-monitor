@@ -1,14 +1,29 @@
-import { getAuthData, JWTAuthData } from "@/features/auth/jwt"
-import { useAppSelector } from "@/shared/hooks/Store/Store";
+import { useEffect, useState } from "react";
+import { getAuthData, JWTAuthData, resetAuthData } from "@/features/auth/jwt"
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/Store/Store";
+import { useNavigate } from "react-router-dom";
+import { routes } from "@/shared/config";
 
 export const useAuthData = () => {
-  const { user } = useAppSelector(getAuthData); 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { jwtToken, user } = useAppSelector(getAuthData); 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const isLoggedIn = user?.username?.length
+  const logout = () => {
+    dispatch(resetAuthData());
+    setIsLoggedIn(false);
+    navigate(routes.root.path); 
+  }
+
+  useEffect(() => {
+    setIsLoggedIn(!!jwtToken);
+  }, [user])
 
   return {
     isLoggedIn,
     username: user?.username,
-    email: user?.email
+    email: user?.email,
+    logout
   }
 } 

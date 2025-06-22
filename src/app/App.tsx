@@ -17,7 +17,6 @@ export const App = () => {
   return(
     <div>
       <Navbar />
-      <h1>Stocks Monitor</h1>
       <AppRouter />
     </div>
   )

@@ -8,7 +8,7 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ className }: NavbarProps) => {
-  const { isLoggedIn, username } = useAuthData();
+  const { isLoggedIn, username, logout } = useAuthData();
 
   return(
     <div className={classNames(styles.Navbar, {}, [className])}>
@@ -17,7 +17,12 @@ export const Navbar = ({ className }: NavbarProps) => {
         <NavLink to="/dashboard">Dashboard</NavLink>
       </div>
       <div className={styles.userInfo}>
-        { !isLoggedIn ? <LoginModal /> : username }
+        <div>
+          { !isLoggedIn ? <LoginModal /> : username }
+        </div>
+        { isLoggedIn && (
+          <div className={styles.logout} onClick={logout}>Logout</div>
+        )}
       </div>
     </div>
   )

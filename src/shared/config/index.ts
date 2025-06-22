@@ -1,1 +1,1 @@
-export { type RouteItem, routes } from "./routes/routes";
+export { type RouteItem, type RoutePath, routes } from "./routes/routes";
