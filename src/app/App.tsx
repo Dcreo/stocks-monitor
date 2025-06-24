@@ -7,12 +7,7 @@ import { AppRouter } from "@/app/providers/RouterProvider";
 import { NavLink } from "react-router-dom";
 
 export const App = () => {
-  // TODO transfer to component
-  const { data, error, isLoading } = useGetStocksQuery();
-                                     useInitAuthData();
-
-  if (error) return <h2>Error</h2>;
-  if (isLoading) return <h2>Data Loading</h2>
+  useInitAuthData();
 
   return(
     <div>

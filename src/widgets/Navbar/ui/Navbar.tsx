@@ -17,9 +17,7 @@ export const Navbar = ({ className }: NavbarProps) => {
     const items: ReactNode[] = Object.keys(menuItems).map((routeName) => {
       const menuItem = menuItems[routeName as MenuRouteName];
 
-      return(
-        <>{authorize?.can(routeName as RouteName) && <NavLink to={menuItem.path}>{menuItem.text}</NavLink>}</>
-      )
+      return(authorize?.can(routeName as RouteName) && <NavLink to={menuItem.path}>{menuItem.text}</NavLink>)
     })
 
     return items; 

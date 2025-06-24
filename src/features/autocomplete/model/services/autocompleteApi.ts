@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AutocompleteApiResults } from "../types/Autocomplete";
+import { IQueryParams } from "../types/Autocomplete";
+import { Stock } from "@/entities/Stock";
 
 export const autocompleteApi = createApi({
   reducerPath: "autocompleteApi",
@@ -7,8 +8,12 @@ export const autocompleteApi = createApi({
     baseUrl: process.env.BACKEND_API_URL
   }),
   endpoints: (build) => ({
-    search: build.query<AutocompleteApiResults, void>({ 
-      query: (url) => `${url}`
+    search: build.query<Stock[], IQueryParams>({ 
+      query: ({ action, query }) => `${action}?query=${query}`,
+      // transformResponse: (response) => {
+      //   return response as IAutocompleteApiResults; 
+      // },
+      keepUnusedDataFor: 0,
     })
   })
 })

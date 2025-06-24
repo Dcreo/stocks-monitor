@@ -1,3 +1,23 @@
 .Autocomplete {
- /**/
+  position: relative;
+}
+
+.results {
+  background-color: #fff;
+  position: absolute;
+  top: 100%;
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  max-height: 400px;
+  overflow: scroll;
+}
+
+.resultsItem {
+  cursor: pointer;
+  padding: 15px;
+
+  &:hover {
+    background-color: #CCC;
+  }
 }
