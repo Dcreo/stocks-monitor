@@ -1,2 +1,2 @@
 export { StockPositionModal } from "./ui/StockPositionModal/StockPositionModal";
-export { type StockPosition } from "./model/types/StockPosition";
+export { type StockPosition, FormFields } from "./model/types/StockPosition";
