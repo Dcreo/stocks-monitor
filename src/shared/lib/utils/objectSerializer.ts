@@ -3,6 +3,7 @@ export enum ObjectSerializerMode {
   camelToSnake = "camelToSnake"
 }
 
+// TODO rewrite to class
 export const objectKeySerializer = (item: unknown, mode: ObjectSerializerMode): unknown => {
   let replacer: (key: string) => void;
 

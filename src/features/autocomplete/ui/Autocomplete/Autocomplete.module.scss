@@ -10,7 +10,8 @@
   display: flex;
   flex-direction: column;
   max-height: 400px;
-  overflow: scroll;
+  overflow: auto;
+  width: 100%;
 }
 
 .resultsItem {
