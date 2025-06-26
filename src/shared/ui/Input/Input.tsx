@@ -7,8 +7,8 @@ type HTMLInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onC
 interface InputProps extends HTMLInputProps {
   className?: string;
   onChange?: (value: string) => void;
-  onFocus?: (value: string) => void;
-  value?: string;
+  onFocus?: (value?: string) => void;
+  value?: string | number;
 }
 
 export const Input = (props: InputProps) => {
@@ -24,11 +24,15 @@ export const Input = (props: InputProps) => {
     onChange?.(e.target.value)
   }
 
+  const onFocusHandler = () => {
+    if (onFocus) onFocus();
+  }
+
   return(
     <div className={classNames(styles.Input, {}, [className])}>
       <input 
         onChange={onChangeHandler} 
-        onFocus={onChangeHandler}
+        onFocus={onFocusHandler}
         value={value} 
         {...otherProps}
       />

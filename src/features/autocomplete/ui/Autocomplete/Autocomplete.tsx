@@ -43,6 +43,10 @@ export const Autocomplete = (props: AutocompleteProps) => {
     setIsElementVisible(false);
   }
 
+  const onFocusHandler = () => {
+    onChangeHandler(query);
+  }
+
   useEffect(() => {
     setIsElementVisible(false);
   }, [])
@@ -51,12 +55,12 @@ export const Autocomplete = (props: AutocompleteProps) => {
     <div className={classNames(styles.Autocomplete, {}, [className])} ref={ref}>
       <Input 
         onChange={onChangeHandler} 
-        onFocus={onChangeHandler}
+        onFocus={onFocusHandler}
         defaultValue={value}
         value={query}
       />
 
-      {isElementVisible && results?.length && (
+      {!!isElementVisible && !!results?.length && (
         <div className={styles.results}>
           {results?.map((item) => {
             return(

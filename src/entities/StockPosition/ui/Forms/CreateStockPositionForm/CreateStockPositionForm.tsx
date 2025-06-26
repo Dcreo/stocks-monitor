@@ -35,7 +35,7 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
 
       <Input 
         onChange={onStocksNumberChangeHandler} 
-        value={String(stockPosition?.stocksNumber)} 
+        value={stockPosition?.stocksNumber} 
       />
     </div>
   )
