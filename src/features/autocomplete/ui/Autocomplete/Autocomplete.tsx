@@ -11,14 +11,18 @@ interface AutocompleteProps {
   action: string;
   onSelect: (item: any) => void;
   value?: string;
+  hasError?: boolean;
+  errorMessage?: string;
 }
 
 export const Autocomplete = (props: AutocompleteProps) => {
   const { 
     className, 
     action,
+    value,
+    hasError,
+    errorMessage,
     onSelect,
-    value
   } = props;
 
   const MINIMUM_SEARCH_LETTERS = 1
@@ -57,6 +61,8 @@ export const Autocomplete = (props: AutocompleteProps) => {
         onChange={onChangeHandler} 
         onFocus={onFocusHandler}
         defaultValue={value}
+        hasError={hasError}
+        errorMessage={errorMessage}
         value={query}
       />
 

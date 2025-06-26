@@ -1,10 +1,11 @@
 import * as styles from "./CreateStockPositionForm.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { classNames, } from "@/shared/lib";
 import { Autocomplete } from "@/features/autocomplete";
 import { Stock } from "@/entities/Stock";
-import { FormFields, StockPosition } from "@/entities/StockPosition";
-import { Input } from "@/shared/ui";
+import { StockPosition, StockPositionValidationErrors } from "@/entities/StockPosition";
+import { Button, Input } from "@/shared/ui";
+import { ValidationErrors } from "@/entities/StockPosition";
 
 interface CreateStockPositionFormProps {
   className?: string
@@ -13,9 +14,9 @@ interface CreateStockPositionFormProps {
 export const CreateStockPositionForm = ({ className }: CreateStockPositionFormProps) => {
   const [stock, setStock] = useState<Stock>();
   const [stockPosition, setStockPosition] = useState<StockPosition>({});
+  const [validationErrors, setValidationErrors] = useState<StockPositionValidationErrors>({});
   
   const onStockChangeHandler = (stock: Stock) => {
-    console.warn("CHANGE SELECT")
     setStock(stock);
     setStockPosition({...stockPosition,  stockId: stock.id})
   }
@@ -24,19 +25,49 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
     setStockPosition({ ...stockPosition, stocksNumber: Number(stocksNumber)})
   }
 
+  const onAveragePriceChangeHandler = (averagePrice: string) => {
+    setStockPosition({ ...stockPosition, averagePrice: Number(averagePrice)})
+  }
+
+  const validate = () => {
+    setValidationErrors({
+      ...(!stockPosition.stockId && {stockId: ValidationErrors.EMPTY}),
+      ...(!stockPosition.stocksNumber && {stocksNumber: ValidationErrors.EMPTY}),
+      ...(!stockPosition.averagePrice && {averagePrice: ValidationErrors.EMPTY}),
+    })
+  }
+
+  useEffect(() => {
+    validate(); 
+  }, [stockPosition]);
+
   return(
     <div className={classNames(styles.CreateStockPositionForm, {}, [className])}>
       {JSON.stringify(stockPosition)}
+      {JSON.stringify(validationErrors)}
       <Autocomplete 
         action={"/stocks/search"} 
         onSelect={onStockChangeHandler} 
         value={stock?.name}
+        hasError={!!validationErrors?.stockId}
+        errorMessage={validationErrors?.stockId}
       />
 
       <Input 
         onChange={onStocksNumberChangeHandler} 
+        hasError={!!validationErrors?.stocksNumber}
+        errorMessage={validationErrors?.stocksNumber}
         value={stockPosition?.stocksNumber} 
       />
+      
+      <Input 
+        onChange={onAveragePriceChangeHandler} 
+        value={stockPosition?.averagePrice} 
+        hasError={!!validationErrors?.averagePrice}
+        errorMessage={validationErrors?.averagePrice}
+      />
+
+      <Button disabled={!!Object.values(validationErrors)?.length}>Add Stock Position</Button>
     </div>
   )
 }
