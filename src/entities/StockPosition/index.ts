@@ -2,6 +2,5 @@ export { StockPositionModal } from "./ui/StockPositionModal/StockPositionModal";
 export { 
   type StockPosition, 
   FormFields,
-  type StockPositionValidationErrors,
-  ValidationErrors
+  StockPositionValidationMessages
 } from "./model/types/StockPosition";

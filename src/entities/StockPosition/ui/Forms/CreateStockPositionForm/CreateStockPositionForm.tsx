@@ -1,11 +1,16 @@
 import * as styles from "./CreateStockPositionForm.module.scss";
 import { useEffect, useState } from "react";
-import { classNames, } from "@/shared/lib";
+import { 
+  classNames, 
+  isNumber, 
+  Validator, 
+  ValidatorErrors,
+  ValidatorRules
+} from "@/shared/lib";
 import { Autocomplete } from "@/features/autocomplete";
 import { Stock } from "@/entities/Stock";
-import { StockPosition, StockPositionValidationErrors } from "@/entities/StockPosition";
+import { StockPosition, StockPositionValidationMessages } from "@/entities/StockPosition";
 import { Button, Input } from "@/shared/ui";
-import { ValidationErrors } from "@/entities/StockPosition";
 
 interface CreateStockPositionFormProps {
   className?: string
@@ -14,7 +19,10 @@ interface CreateStockPositionFormProps {
 export const CreateStockPositionForm = ({ className }: CreateStockPositionFormProps) => {
   const [stock, setStock] = useState<Stock>();
   const [stockPosition, setStockPosition] = useState<StockPosition>({});
-  const [validationErrors, setValidationErrors] = useState<StockPositionValidationErrors>({});
+  const [validator, setValidator] = useState<Validator>(
+    new Validator(StockPositionValidationMessages)
+  );
+  const [touchValidator, setTouchValidator] = useState<boolean>(false);
   
   const onStockChangeHandler = (stock: Stock) => {
     setStock(stock);
@@ -26,48 +34,70 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
   }
 
   const onAveragePriceChangeHandler = (averagePrice: string) => {
+    console.warn(Number(averagePrice))
+    if (!isNumber(Number(averagePrice))) return
     setStockPosition({ ...stockPosition, averagePrice: Number(averagePrice)})
   }
 
   const validate = () => {
-    setValidationErrors({
-      ...(!stockPosition.stockId && {stockId: ValidationErrors.EMPTY}),
-      ...(!stockPosition.stocksNumber && {stocksNumber: ValidationErrors.EMPTY}),
-      ...(!stockPosition.averagePrice && {averagePrice: ValidationErrors.EMPTY}),
-    })
+    validator.call(
+      stockPosition, 
+      "stockId", 
+      [ValidatorRules.REQUIRED]
+    );
+    
+    validator.call(
+      stockPosition, 
+      "stocksNumber", 
+      [
+        ValidatorRules.REQUIRED, 
+        ValidatorRules.IS_NUMBER
+      ]
+    );
+
+    validator.call(
+      stockPosition, 
+      "averagePrice", 
+      [ValidatorRules.REQUIRED]
+    );
+
+    setTouchValidator(prev => !prev)
   }
 
   useEffect(() => {
     validate(); 
   }, [stockPosition]);
 
+  // useEffect(() => {
+  //   setValidator(validator);
+  // }, [validator])
+
   return(
     <div className={classNames(styles.CreateStockPositionForm, {}, [className])}>
       {JSON.stringify(stockPosition)}
-      {JSON.stringify(validationErrors)}
       <Autocomplete 
         action={"/stocks/search"} 
         onSelect={onStockChangeHandler} 
         value={stock?.name}
-        hasError={!!validationErrors?.stockId}
-        errorMessage={validationErrors?.stockId}
+        hasError={validator?.stockId?.errors?.length}
+        errorMessage={validator?.stockId?.messages[0]}
       />
 
       <Input 
         onChange={onStocksNumberChangeHandler} 
-        hasError={!!validationErrors?.stocksNumber}
-        errorMessage={validationErrors?.stocksNumber}
+        hasError={validator?.stocksNumber?.errors?.length}
+        errorMessage={validator?.stocksNumber?.messages[0]}
         value={stockPosition?.stocksNumber} 
       />
       
       <Input 
         onChange={onAveragePriceChangeHandler} 
         value={stockPosition?.averagePrice} 
-        hasError={!!validationErrors?.averagePrice}
-        errorMessage={validationErrors?.averagePrice}
+        hasError={validator?.averagePrice?.errors?.length}
+        errorMessage={validator?.averagePrice?.messages[0]}
       />
 
-      <Button disabled={!!Object.values(validationErrors)?.length}>Add Stock Position</Button>
+      <Button disabled={false}>Add Stock Position</Button>
     </div>
   )
 }

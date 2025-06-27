@@ -11,14 +11,8 @@ export interface StockPosition {
   averagePrice?: number;
 }
 
-export enum ValidationErrors {
+// TODO fields messages for all
+export enum StockPositionValidationMessages {
   EMPTY = "The field cannot be empty",
   NOT_NUMBER = "Value is not a number"
-
-}
-
-export interface StockPositionValidationErrors {
-  stockId?: ValidationErrors;
-  stocksNumber?: ValidationErrors;
-  averagePrice?: ValidationErrors;
 }
