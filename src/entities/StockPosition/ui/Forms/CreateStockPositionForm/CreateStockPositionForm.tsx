@@ -4,8 +4,7 @@ import {
   classNames, 
   isNumber, 
   Validator, 
-  ValidatorErrors,
-  ValidatorRules
+  ValidatorRules as VRules
 } from "@/shared/lib";
 import { Autocomplete } from "@/features/autocomplete";
 import { Stock } from "@/entities/Stock";
@@ -19,7 +18,8 @@ interface CreateStockPositionFormProps {
 export const CreateStockPositionForm = ({ className }: CreateStockPositionFormProps) => {
   const [stock, setStock] = useState<Stock>();
   const [stockPosition, setStockPosition] = useState<StockPosition>({});
-  const [validator, setValidator] = useState<Validator>(
+  // TODO move validator to hooks
+  const [validator] = useState<Validator>(
     new Validator(StockPositionValidationMessages)
   );
   const [touchValidator, setTouchValidator] = useState<boolean>(false);
@@ -40,25 +40,16 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
   }
 
   const validate = () => {
-    validator.call(
-      stockPosition, 
-      "stockId", 
-      [ValidatorRules.REQUIRED]
+    validator.call(stockPosition, "stockId", 
+      [VRules.REQUIRED]
     );
     
-    validator.call(
-      stockPosition, 
-      "stocksNumber", 
-      [
-        ValidatorRules.REQUIRED, 
-        ValidatorRules.IS_NUMBER
-      ]
+    validator.call(stockPosition, "stocksNumber", 
+      [VRules.REQUIRED, VRules.IS_NUMBER]
     );
 
-    validator.call(
-      stockPosition, 
-      "averagePrice", 
-      [ValidatorRules.REQUIRED]
+    validator.call(stockPosition, "averagePrice", 
+      [VRules.REQUIRED]
     );
 
     setTouchValidator(prev => !prev)
@@ -67,10 +58,6 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
   useEffect(() => {
     validate(); 
   }, [stockPosition]);
-
-  // useEffect(() => {
-  //   setValidator(validator);
-  // }, [validator])
 
   return(
     <div className={classNames(styles.CreateStockPositionForm, {}, [className])}>
