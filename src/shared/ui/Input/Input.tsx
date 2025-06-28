@@ -41,6 +41,7 @@ export const Input = (props: InputProps) => {
       <input 
         onChange={onChangeHandler} 
         onFocus={onFocusHandler}
+        className={styles.input}
         value={value} 
         {...otherProps}
       />

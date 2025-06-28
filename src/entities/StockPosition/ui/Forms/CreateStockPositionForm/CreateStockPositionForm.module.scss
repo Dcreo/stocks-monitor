@@ -1,3 +1,14 @@
 .CreateStockPositionForm {
   padding: 20px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.button {
+  margin-top: 15px;
+}
+
+.input {
+  width: 96%;
 }

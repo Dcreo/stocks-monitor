@@ -62,29 +62,38 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
   return(
     <div className={classNames(styles.CreateStockPositionForm, {}, [className])}>
       {JSON.stringify(stockPosition)}
-      <Autocomplete 
-        action={"/stocks/search"} 
-        onSelect={onStockChangeHandler} 
-        value={stock?.name}
-        hasError={validator?.stockId?.errors?.length}
-        errorMessage={validator?.stockId?.messages[0]}
-      />
+      <div>
+        <Autocomplete 
+          action={"/stocks/search"} 
+          onSelect={onStockChangeHandler} 
+          value={stock?.name}
+          hasError={validator?.stockId?.errors?.length}
+          className={styles.input}
+          errorMessage={validator?.stockId?.messages[0]}
+        />
+      </div>
 
-      <Input 
-        onChange={onStocksNumberChangeHandler} 
-        hasError={validator?.stocksNumber?.errors?.length}
-        errorMessage={validator?.stocksNumber?.messages[0]}
-        value={stockPosition?.stocksNumber} 
-      />
+      <div>
+        <Input 
+          onChange={onStocksNumberChangeHandler} 
+          hasError={validator?.stocksNumber?.errors?.length}
+          errorMessage={validator?.stocksNumber?.messages[0]}
+          className={styles.input}
+          value={stockPosition?.stocksNumber} 
+        />
+      </div>
       
-      <Input 
-        onChange={onAveragePriceChangeHandler} 
-        value={stockPosition?.averagePrice} 
-        hasError={validator?.averagePrice?.errors?.length}
-        errorMessage={validator?.averagePrice?.messages[0]}
-      />
+      <div>
+        <Input 
+          onChange={onAveragePriceChangeHandler} 
+          value={stockPosition?.averagePrice} 
+          hasError={validator?.averagePrice?.errors?.length}
+          className={styles.input}
+          errorMessage={validator?.averagePrice?.messages[0]}
+        />
+      </div>
 
-      <Button disabled={false}>Add Stock Position</Button>
+      <Button disabled={false} className={styles.button}>Add Stock Position</Button>
     </div>
   )
 }
