@@ -10,6 +10,7 @@ import { Autocomplete } from "@/features/autocomplete";
 import { Stock } from "@/entities/Stock";
 import { StockPosition, StockPositionValidationMessages } from "@/entities/StockPosition";
 import { Button, Input } from "@/shared/ui";
+import { useCreateStockPositionMutation } from "@/entities/StockPosition";
 
 interface CreateStockPositionFormProps {
   className?: string
@@ -18,6 +19,8 @@ interface CreateStockPositionFormProps {
 export const CreateStockPositionForm = ({ className }: CreateStockPositionFormProps) => {
   const [stock, setStock] = useState<Stock>();
   const [stockPosition, setStockPosition] = useState<StockPosition>({});
+  const [createStockPosition, result] = useCreateStockPositionMutation()
+
   // TODO move validator to hooks
   const [validator] = useState<Validator>(
     new Validator(StockPositionValidationMessages)
@@ -53,6 +56,10 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
     );
 
     setTouchValidator(prev => !prev)
+  }
+
+  const createStockPositionHandler = () => {
+    createStockPosition(stockPosition);
   }
 
   useEffect(() => {
@@ -93,7 +100,12 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
         />
       </div>
 
-      <Button disabled={false} className={styles.button}>Add Stock Position</Button>
+      <Button 
+        disabled={false} 
+        onClick={createStockPositionHandler}
+        className={styles.button}>
+        Add Stock Position
+      </Button>
     </div>
   )
 }

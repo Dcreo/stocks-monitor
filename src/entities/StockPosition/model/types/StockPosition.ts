@@ -16,3 +16,5 @@ export enum StockPositionValidationMessages {
   EMPTY = "The field cannot be empty",
   NOT_NUMBER = "Value is not a number"
 }
+
+export type NewStockPosition = Pick<StockPosition, "stockId" | "stocksNumber" | "averagePrice">
