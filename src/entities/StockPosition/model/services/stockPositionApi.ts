@@ -11,8 +11,6 @@ export const stockPositionApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as StateSchema).jwtAuth.jwtToken
 
-      console.warn(token)
-
       if (token) {
         headers.set("authorization", `Bearer ${token}`)
       }
@@ -20,16 +18,26 @@ export const stockPositionApi = createApi({
       return headers;
     }
   }),
+  tagTypes: ["StockPositions"],
   endpoints: (build) => ({
     getStockPositions: build.query<StockPosition[], void>({ 
-      query: () => "stock_positions"
+      query: () => "stock_positions",
+      transformResponse: (response: StockPosition[]) => {
+        const data = response.map((stockPosition: StockPosition) => {
+          return objectKeySerializer(stockPosition, ObjectSerializerMode.snakeToCamel) as StockPosition;
+        })
+
+        return data;
+      },
+      providesTags: ["StockPositions"],
     }),
     createStockPosition: build.mutation<StockPosition, NewStockPosition>({
       query: (body) => ({
         url: "stock_positions",
         method: "POST",
         body: {stock_position: objectKeySerializer(body, ObjectSerializerMode.camelToSnake)}
-      })
+      }),
+      invalidatesTags: ["StockPositions"]
     })
   })
 })

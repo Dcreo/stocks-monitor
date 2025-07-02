@@ -18,7 +18,7 @@ export const StockPositionModal = (props: StockPositionModalProps) => {
 
   return(
     <Modal isOpen={isOpen} onClose={onClose}>
-      <CreateStockPositionForm />
+      <CreateStockPositionForm onSuccess={onClose} />
     </Modal>
   )
 }

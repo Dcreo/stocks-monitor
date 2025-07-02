@@ -13,13 +13,19 @@ import { Button, Input } from "@/shared/ui";
 import { useCreateStockPositionMutation } from "@/entities/StockPosition";
 
 interface CreateStockPositionFormProps {
-  className?: string
+  className?: string;
+  onSuccess?: () => void;
 }
 
-export const CreateStockPositionForm = ({ className }: CreateStockPositionFormProps) => {
+export const CreateStockPositionForm = (props: CreateStockPositionFormProps) => {
+  const { 
+    className, 
+    onSuccess 
+  } = props;
+
   const [stock, setStock] = useState<Stock>();
   const [stockPosition, setStockPosition] = useState<StockPosition>({});
-  const [createStockPosition, result] = useCreateStockPositionMutation()
+  const [createStockPosition, { isSuccess, isLoading }] = useCreateStockPositionMutation()
 
   // TODO move validator to hooks
   const [validator] = useState<Validator>(
@@ -66,6 +72,10 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
     validate(); 
   }, [stockPosition]);
 
+  useEffect(() => {
+    if (!!isSuccess && onSuccess) onSuccess(); 
+  }, [isSuccess])
+
   return(
     <div className={classNames(styles.CreateStockPositionForm, {}, [className])}>
       {JSON.stringify(stockPosition)}
@@ -101,7 +111,7 @@ export const CreateStockPositionForm = ({ className }: CreateStockPositionFormPr
       </div>
 
       <Button 
-        disabled={false} 
+        disabled={isLoading} 
         onClick={createStockPositionHandler}
         className={styles.button}>
         Add Stock Position

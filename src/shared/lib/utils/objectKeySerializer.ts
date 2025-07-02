@@ -10,8 +10,10 @@ export const objectKeySerializer = (item: unknown, mode: ObjectSerializerMode): 
   switch(mode) {
     case ObjectSerializerMode.snakeToCamel: 
       replacer = (key) => key.replace(/([-_][a-z])/gi, c => c.toUpperCase().replace(/[-_]/g, ''))
+      break;
     case ObjectSerializerMode.camelToSnake: 
       replacer = (key) => key.replace(/[A-Z]/g, c => `_${c.toLowerCase()}`);
+      break;
   }
 
   if (Array.isArray(item)) {

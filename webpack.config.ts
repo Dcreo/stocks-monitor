@@ -44,7 +44,7 @@ module.exports = (env: any) => {
       strictExportPresence: true,
       rules: [
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.s[ac]ss|.css$/i,
           use: [{
             loader: isDev ? MiniCssExtractPlugin.loader : "style-loader",
           }, {

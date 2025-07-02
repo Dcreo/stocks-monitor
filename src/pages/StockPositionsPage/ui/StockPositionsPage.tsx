@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { classNames } from "@/shared/lib";
 import * as styles from "./StockPositionsPage.module.scss";
-import { StockPositionModal } from "@/entities/StockPosition";
+import { StockPositionModal, StockPositionTable } from "@/entities/StockPosition";
+import { useGetStockPositionsQuery } from "@/entities/StockPosition";
 
 interface StockPositionsPageProps {
   className?: string
@@ -9,6 +10,7 @@ interface StockPositionsPageProps {
 
 export const StockPositionsPage = ({ className }: StockPositionsPageProps) => {
   const [createModalIsOpen, setCreateModalIsOpen] = useState<boolean>(false);
+  const {data: stockPositions, isError, isLoading} = useGetStockPositionsQuery();
 
   return(
     <div className={classNames(styles.StockPositionsPage, {}, [className])}>
@@ -22,6 +24,8 @@ export const StockPositionsPage = ({ className }: StockPositionsPageProps) => {
       <StockPositionModal 
         isOpen={createModalIsOpen} 
         onClose={() => setCreateModalIsOpen(false)} />
+
+      <StockPositionTable stockPositions={stockPositions} className={styles.table} />
     </div>
   )
 }

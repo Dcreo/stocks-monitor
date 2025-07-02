@@ -1,3 +1,5 @@
+import { Stock } from "@/entities/Stock";
+
 export enum FormFields {
   STOCK = "stock",
   STOCKS_NUMBER = "stocks_number"
@@ -9,6 +11,7 @@ export interface StockPosition {
   userId?: number;
   stocksNumber?: number;
   averagePrice?: number;
+  stock?: Stock;
 }
 
 // TODO fields messages for all
