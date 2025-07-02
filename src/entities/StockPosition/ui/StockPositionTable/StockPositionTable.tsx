@@ -29,14 +29,14 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
 
   return(
     <div className={classNames(styles.StockPositionTable, {}, [className])}>
-      <div style={{height: 500}}>
-       <AgGridReact<StockPosition> 
-          rowData={stockPositions} 
-          columnDefs={columnDefs}
-          rowClass={styles.tableRow}
-          rowHeight={50}
-        /> 
-      </div>
+      <AgGridReact 
+        className={styles.table}
+        domLayout='autoHeight'
+        rowData={stockPositions} 
+        columnDefs={columnDefs}
+        rowClass={styles.tableRow}
+        rowHeight={50}
+      /> 
     </div>
   )
 }
