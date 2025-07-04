@@ -12,7 +12,7 @@ export const MainPage = ({ className }: MainPageProps) => {
 
   return(
     <div className={classNames(styles.MainPage, {}, [className])}>
-      <h1>Main page</h1>
+      <h1>Stocks</h1>
 
       <StocksList stocks={data} />
     </div>
