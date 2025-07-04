@@ -1,3 +1,5 @@
+import { StockPosition } from "@/entities/StockPosition";
+
 export interface Stock { 
   id: number;
   ticker: string;
@@ -5,4 +7,5 @@ export interface Stock {
   exchange: string;
   name: string;
   price: number;
+  position: StockPosition;
 }

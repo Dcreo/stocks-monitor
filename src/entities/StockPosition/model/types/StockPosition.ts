@@ -1,5 +1,10 @@
 import { Stock } from "@/entities/Stock";
 
+export enum StockPositionCellMode {
+  READONLY = "readonly",
+  EDITABLE = "editable"
+}
+
 export enum FormFields {
   STOCK = "stock",
   STOCKS_NUMBER = "stocks_number"
