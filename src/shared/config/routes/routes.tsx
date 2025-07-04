@@ -1,8 +1,9 @@
 import React, { ReactNode } from "react";
-import { MainPage, DashboardPage, NotFoundPage, StockPositionsPage } from "@/pages";
+import { MainPage, DashboardPage, NotFoundPage, StockPositionsPage, StocksPage } from "@/pages";
 
 export enum RouteName {
   ROOT = "root",
+  STOCKS = "stocks",
   DASHBOARD = "dashboard",
   STOCK_POSITIONS = "stock_positions",
   NOT_FOUND = "not_found"
@@ -10,6 +11,7 @@ export enum RouteName {
 
 export enum RoutePath {
   ROOT = "/",
+  STOCKS = "/stocks",
   DASHBOARD = "/dashboard",
   STOCK_POSITIONS = "/stock_positions",
   NOT_FOUND = "*"
@@ -26,6 +28,11 @@ export const routes: Record<RouteName, RouteItem> = {
     path: RoutePath.ROOT,
     element: <MainPage />,
     auth: false
+  },
+  [RouteName.STOCKS]: {
+    path: RoutePath.STOCKS,
+    element: <StocksPage />,
+    auth: true,
   },
   [RouteName.DASHBOARD]: {
     path: RoutePath.DASHBOARD,

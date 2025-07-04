@@ -9,8 +9,12 @@ export type MenuRouteName = Exclude<RouteName, RouteName.NOT_FOUND>
 
 export const menuItems: Record<MenuRouteName, IMenuItem> = {
   [RouteName.ROOT]: {
-    text: "Stocks",
+    text: "Main Page",
     path: RoutePath.ROOT
+  },
+  [RouteName.STOCKS]: {
+    text: "Stocks",
+    path: RoutePath.STOCKS
   },
   [RouteName.DASHBOARD]: {
     text: "Dashboard",
