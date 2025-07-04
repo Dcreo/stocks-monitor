@@ -25,7 +25,12 @@ export const StockPositionsPage = ({ className }: StockPositionsPageProps) => {
         isOpen={createModalIsOpen} 
         onClose={() => setCreateModalIsOpen(false)} />
 
-      <StockPositionTable stockPositions={stockPositions} className={styles.table} />
+      {!!stockPositions?.length && (
+        <StockPositionTable 
+          stockPositions={stockPositions} 
+          className={styles.table} />
+        )
+      }
     </div>
   )
 }

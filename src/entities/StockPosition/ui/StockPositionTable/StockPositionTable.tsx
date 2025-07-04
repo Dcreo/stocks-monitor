@@ -1,7 +1,7 @@
 import { classNames } from "@/shared/lib";
 import * as styles from "./StockPositionTable.module.scss";
-import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-quartz.css";
+// import "ag-grid-community/styles/ag-grid.css"
+// import "ag-grid-community/styles/ag-theme-quartz.css";
 import { StockPosition } from "../../model/types/StockPosition";
 import { AgGridReact } from 'ag-grid-react';
 import { useState } from "react";
@@ -18,23 +18,26 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
     stockPositions = []
   } = props;
 
-  const [columnDefs, setColumnDefs] = useState<ColDef<StockPosition>[]>([
-    { 
-      field: "stock.name",
-      flex: 2
-    },
-    { field: "stocksNumber"},
-    { field: "averagePrice"},
+  const [columns, setColumns] = useState<ColDef<StockPosition>[]>([
+    { field: "stock.name", flex: 2 },
+    { field: "stock.price"},
+    { field: "stocksNumber" },
+    { field: "averagePrice" },
   ]);
+
+  const extraColumns = () => {
+    return columns.map((o) => ({ 
+      ...o, 
+      cellClass: styles.cell 
+    }))
+  }
 
   return(
     <div className={classNames(styles.StockPositionTable, {}, [className])}>
       <AgGridReact 
-        className={styles.table}
         domLayout='autoHeight'
         rowData={stockPositions} 
-        columnDefs={columnDefs}
-        rowClass={styles.tableRow}
+        columnDefs={extraColumns()}
         rowHeight={50}
       /> 
     </div>
