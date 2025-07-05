@@ -1,15 +1,7 @@
+import { ReactNode } from "react";
 import { Stock } from "@/entities/Stock";
 
-export enum StockPositionCellMode {
-  READONLY = "readonly",
-  EDITABLE = "editable"
-}
-
-export enum FormFields {
-  STOCK = "stock",
-  STOCKS_NUMBER = "stocks_number"
-}
-
+// Base Stock Position Interface
 export interface StockPosition {
   id?: number;
   stockId?: number;
@@ -17,6 +9,23 @@ export interface StockPosition {
   stocksNumber?: number;
   averagePrice?: number;
   stock?: Stock;
+}
+
+// Modes for Table view cells
+export enum StockPositionCellMode {
+  READONLY = "readonly",
+  EDITABLE = "editable"
+}
+
+// Stock Position Table type
+
+export interface IStockPositionTable extends StockPosition {
+  actions?: ReactNode;
+}
+
+export enum FormFields {
+  STOCK = "stock",
+  STOCKS_NUMBER = "stocks_number"
 }
 
 // TODO fields messages for all

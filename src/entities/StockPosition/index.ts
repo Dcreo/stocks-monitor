@@ -4,9 +4,10 @@ export { StockPositionCell } from "./ui/StockPositionCell/StockPositionCell";
 export { 
   type StockPosition, 
   type NewStockPosition,
+  type IStockPositionTable,
   FormFields,
   StockPositionValidationMessages,
-  StockPositionCellMode
+  StockPositionCellMode,
 } from "./model/types/StockPosition";
 export { 
   useCreateStockPositionMutation,

@@ -7,10 +7,22 @@
   display: inline-block;
   color: red;
   font-size: 24px;
+  margin-left: auto;
 }
 
 .add {
   color: green;
   cursor: pointer;
   font-size: 24px;
+}
+
+.edit {
+  color: green;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
 }
