@@ -18,9 +18,21 @@ export enum StockPositionCellMode {
 }
 
 // Stock Position Table type
-
 export interface IStockPositionTable extends StockPosition {
   actions?: ReactNode;
+}
+
+// Forms types
+export enum StockPositionFormType {
+  NEW = "new",
+  EDIT = "edit"
+}
+
+// Store Schema
+export interface IStockPositionStateSchema {
+  isModalOpen?: boolean;
+  stockPositiionId?: number;
+  formType?: StockPositionFormType;
 }
 
 export enum FormFields {
@@ -34,4 +46,5 @@ export enum StockPositionValidationMessages {
   NOT_NUMBER = "Value is not a number"
 }
 
+// Type for new Stock Position object
 export type NewStockPosition = Pick<StockPosition, "stockId" | "stocksNumber" | "averagePrice">

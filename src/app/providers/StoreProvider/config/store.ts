@@ -8,11 +8,13 @@ import { usersApi } from "@/entities/User";
 import { jwtAuthApi } from "@/features/auth/jwt";
 import { autocompleteApi } from "@/features/autocomplete/model/services/autocompleteApi";
 import { stockPositionApi } from "@/entities/StockPosition/model/services/stockPositionApi";
+import { stockPositionReducer } from "@/entities/StockPosition";
 
 const store = configureStore<StateSchema>({
   reducer: {
     //@ts-ignore
     jwtAuth: jwtAuthReducer,   
+    stockPosition: stockPositionReducer,
     [stocksApi.reducerPath]: stocksApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [jwtAuthApi.reducerPath]: jwtAuthApi.reducer,

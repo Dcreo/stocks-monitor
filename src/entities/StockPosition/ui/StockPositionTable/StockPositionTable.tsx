@@ -2,11 +2,18 @@ import { classNames } from "@/shared/lib";
 import * as styles from "./StockPositionTable.module.scss";
 // import "ag-grid-community/styles/ag-grid.css"
 // import "ag-grid-community/styles/ag-theme-quartz.css";
-import { IStockPositionTable, StockPosition, StockPositionCellMode } from "../../model/types/StockPosition";
+import { IStockPositionTable, StockPosition, StockPositionCellMode, StockPositionFormType } from "../../model/types/StockPosition";
 import { AgGridReact } from 'ag-grid-react';
 import { useState } from "react";
 import { ColDef } from "ag-grid-community";
 import { StockPositionCell } from "../StockPositionCell/StockPositionCell";
+import { useSelector } from "react-redux";
+import { getIsModalOpen } from "../../model/selectors/getIsModalOpen/getIsModalOpen";
+import { Modal } from "@/shared/ui";
+import { useAppDispatch } from "@/shared/hooks";
+import { setModalData } from "../../model/slice/stockPositionSlice";
+import { StockPositionModal } from "../StockPositionModal/StockPositionModal";
+import { getFormType } from "../../model/selectors/getFormType/getFormType";
 
 interface IStockPositionTableProps {
   className?: string;
@@ -18,6 +25,10 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
     className, 
     stockPositions = []
   } = props;
+
+  const isModalOpen = useSelector(getIsModalOpen);
+  const formType = useSelector(getFormType);
+  const dispatch = useAppDispatch();
 
   const [columns, setColumns] = useState<ColDef<IStockPositionTable>[]>([
     { field: "stock.name", flex: 2 },
@@ -45,6 +56,10 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
     }))
   }
 
+  const onModalCloseHandler = () => {
+    dispatch(setModalData({ isModalOpen: false }))
+  }
+
   return(
     <div className={classNames(styles.StockPositionTable, {}, [className])}>
       <AgGridReact<IStockPositionTable> 
@@ -53,6 +68,11 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
         columnDefs={extraColumns()}
         rowHeight={50}
       /> 
+
+      <StockPositionModal 
+        isOpen={isModalOpen} 
+        formType={formType}
+        onClose={onModalCloseHandler} />
     </div>
   )
 }
