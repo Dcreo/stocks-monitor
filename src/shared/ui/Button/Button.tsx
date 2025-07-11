@@ -6,8 +6,17 @@ export enum ButtonTheme {
   OUTLINE = "outline"
 }
 
+export enum ButtonSize {
+  EXTRA_SMALL = "extra_small",
+  SMALL = "small",
+  MIDDLE = "middle",
+  LARGE = "large",
+  EXTRA_LARGE = "extra_large"
+}
+
 interface ButtonProps {
   className?: string;
+  size?: ButtonSize;
   theme?: ButtonTheme;
   children: ReactNode;
   isLoading?: boolean;
@@ -22,6 +31,7 @@ export const Button = (props: ButtonProps) => {
     children,
     isLoading,
     loadingText = "Loading...",
+    size = ButtonSize.MIDDLE,
     theme = ButtonTheme.OUTLINE,
     disabled,
     onClick, // TODO extend base events
@@ -29,6 +39,7 @@ export const Button = (props: ButtonProps) => {
 
   const mods: Mods = {
     [styles[theme]]: !!theme,
+    [styles[size]]: size,
   }
 
   return(

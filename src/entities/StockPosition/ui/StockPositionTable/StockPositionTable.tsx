@@ -38,6 +38,8 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
     },
     { field: "stocksNumber" },
     { field: "averagePrice" },
+    { field: "currentCost"},
+    { field: "baseCost"},
     { 
       field: "id",
       headerName: "actions",

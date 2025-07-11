@@ -21,7 +21,12 @@ export const EditStockPositionForm = (props: EditStockPositionFormProps) => {
   const [editedStockPosition, setEditedStockPosition] = useState<EditableStockPosition>({});
 
   const id = useSelector(getStockPositionId);
-  const { data: stockPosition, isError: isFetchError, isLoading: isFetchLoading} = useGetStockPositionQuery(id) 
+  const { 
+    data: stockPosition, 
+    isError: isFetchError, 
+    isLoading: isFetchLoading
+  } = useGetStockPositionQuery(id) 
+  
   const [updateStockPosition, {
     isLoading: isUpdateLoading, 
     isError: isUpdateError,
@@ -47,12 +52,14 @@ export const EditStockPositionForm = (props: EditStockPositionFormProps) => {
       <Input 
         className={styles.input} 
         defaultValue={stockPosition?.stocksNumber}
+        label={"Stocks number"}
         onChange={(value) => onChangeHandler(value, "stocksNumber")}
         disabled={isFetchLoading || isUpdateLoading} />
       
       <Input 
         className={styles.input} 
         defaultValue={stockPosition?.averagePrice}
+        label={"Average price"}
         onChange={(value) => onChangeHandler(value, "averagePrice")}
         disabled={isFetchLoading || isUpdateLoading} />
 

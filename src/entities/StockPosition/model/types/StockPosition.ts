@@ -8,6 +8,8 @@ export interface StockPosition {
   userId?: number;
   stocksNumber?: number;
   averagePrice?: number;
+  baseCost?: number;
+  currentCost?: number;
   stock?: Stock;
 }
 

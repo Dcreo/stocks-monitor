@@ -12,6 +12,7 @@ interface InputProps extends HTMLInputProps {
   hasError?: boolean;
   errorMessage?: string;
   disabled?: boolean;
+  label?: string;
 }
 
 export const Input = (props: InputProps) => {
@@ -20,9 +21,10 @@ export const Input = (props: InputProps) => {
     value,
     hasError,
     errorMessage,
+    disabled,
+    label,
     onChange,
     onFocus,
-    disabled,
     ...otherProps
   } = props;
 
@@ -40,6 +42,10 @@ export const Input = (props: InputProps) => {
 
   return(
     <div className={classNames(styles.Input, mods, [className])}>
+      {label?.length && (
+        <label>{label}</label>
+      )}
+
       <input 
         onChange={onChangeHandler} 
         onFocus={onFocusHandler}
