@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { NewStockPosition, StockPosition } from "../types/StockPosition";
+import { EditableStockPosition, NewStockPosition, StockPosition } from "../types/StockPosition";
 import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
 import { StateSchema } from "@/app/providers";
 
@@ -44,6 +44,15 @@ export const stockPositionApi = createApi({
         body: {stock_position: objectKeySerializer(body, ObjectSerializerMode.camelToSnake)}
       }),
       invalidatesTags: ["StockPositions"]
+    }),
+    updateStockPosition: build.mutation<StockPosition, EditableStockPosition>({
+      query: (body) => ({
+        url: `stock_positions/${body?.id}`,
+        method: "PUT",
+        body: {stock_position: objectKeySerializer(body, ObjectSerializerMode.camelToSnake)}
+      }),
+      // TODO invalidate only updated item
+      invalidatesTags: ["StockPositions"]
     })
   })
 })
@@ -51,5 +60,6 @@ export const stockPositionApi = createApi({
 export const { 
   useGetStockPositionsQuery,
   useGetStockPositionQuery,
-  useCreateStockPositionMutation
+  useCreateStockPositionMutation,
+  useUpdateStockPositionMutation,
 } = stockPositionApi;

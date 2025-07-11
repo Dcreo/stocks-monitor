@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { classNames } from "@/shared/lib";
 import * as styles from "./EditStockPositionForm.module.scss";
 import { useSelector } from "react-redux";
 import { getStockPositionId } from "../../../model/selectors/getStockPositionId/getStockPositionId";
 import { Button, Input } from "@/shared/ui";
-import { useGetStockPositionQuery } from "@/entities/StockPosition/model/services/stockPositionApi";
+import { useGetStockPositionQuery, useUpdateStockPositionMutation } from "@/entities/StockPosition/model/services/stockPositionApi";
+import { EditableStockPosition, StockPosition } from "@/entities/StockPosition/model/types/StockPosition";
 
 interface EditStockPositionFormProps {
   className?: string;
@@ -12,18 +13,55 @@ interface EditStockPositionFormProps {
   id?: number; 
 }
 
+type editableFields = keyof StockPosition;
+
 export const EditStockPositionForm = (props: EditStockPositionFormProps) => {
   const { className, onSuccess } = props;
 
+  const [editedStockPosition, setEditedStockPosition] = useState<EditableStockPosition>({});
+
   const id = useSelector(getStockPositionId);
-  const { data: stockPosition, isError, isLoading} = useGetStockPositionQuery(id) 
+  const { data: stockPosition, isError: isFetchError, isLoading: isFetchLoading} = useGetStockPositionQuery(id) 
+  const [updateStockPosition, {
+    isLoading: isUpdateLoading, 
+    isError: isUpdateError,
+    isSuccess: isUpdateSuccess
+  }] = useUpdateStockPositionMutation()
+
+  const onChangeHandler = (value: string, field: editableFields): void => {
+    setEditedStockPosition({...editedStockPosition, [field]: Number(value), id: id})  
+  }
+
+  const saveStockPositionHandler = (): void => {
+    updateStockPosition(editedStockPosition); 
+  }
+
+  useEffect(() => {
+    if (!!isUpdateSuccess && onSuccess) onSuccess();
+  }, [isUpdateSuccess])
 
   return(
     <div className={classNames(styles.EditStockPositionForm, {}, [className])}>
       {stockPosition?.id && <h1>{stockPosition?.stock?.name}</h1>}
-      <Input className={styles.input} disabled={true} />
-      <Input className={styles.input} disabled={true} />
-      <Button isLoading={true}>Save</Button>
+
+      <Input 
+        className={styles.input} 
+        defaultValue={stockPosition?.stocksNumber}
+        onChange={(value) => onChangeHandler(value, "stocksNumber")}
+        disabled={isFetchLoading || isUpdateLoading} />
+      
+      <Input 
+        className={styles.input} 
+        defaultValue={stockPosition?.averagePrice}
+        onChange={(value) => onChangeHandler(value, "averagePrice")}
+        disabled={isFetchLoading || isUpdateLoading} />
+
+      <Button 
+        onClick={saveStockPositionHandler}   
+        loadingText={isUpdateLoading ? "Updating..." : ""}
+        isLoading={isFetchLoading || isUpdateLoading}>
+        Save
+      </Button>
     </div>
   )
 }

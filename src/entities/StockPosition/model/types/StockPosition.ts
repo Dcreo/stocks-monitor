@@ -48,3 +48,6 @@ export enum StockPositionValidationMessages {
 
 // Type for new Stock Position object
 export type NewStockPosition = Pick<StockPosition, "stockId" | "stocksNumber" | "averagePrice">
+
+// Type for editable Stock Position object
+export type EditableStockPosition = Pick<StockPosition, "id" | "stocksNumber" | "averagePrice">

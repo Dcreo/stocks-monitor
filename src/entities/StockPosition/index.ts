@@ -8,6 +8,7 @@ export { EditStockPositionForm } from "./ui/Forms/EditStockPositionForm/EditStoc
 export { 
   type StockPosition, 
   type NewStockPosition,
+  type EditableStockPosition,
   type IStockPositionTable,
   type IStockPositionStateSchema,
   FormFields,
@@ -17,9 +18,10 @@ export {
 } from "./model/types/StockPosition";
 
 export { 
-  useCreateStockPositionMutation,
   useGetStockPositionsQuery,
   useGetStockPositionQuery,
+  useCreateStockPositionMutation,
+  useUpdateStockPositionMutation,
 } from "./model/services/stockPositionApi";
 
 export { setModalData } from "./model/slice/stockPositionSlice";
