@@ -9,6 +9,7 @@ interface StockPositionModalProps {
   className?: string;
   isOpen: boolean | undefined;
   onClose: () => void;
+  id?: number;
   formType?: StockPositionFormType;
 }
 
@@ -16,6 +17,7 @@ export const StockPositionModal = (props: StockPositionModalProps) => {
   const {
     className,
     isOpen,
+    id,
     formType = StockPositionFormType.NEW, 
     onClose,
   } = props

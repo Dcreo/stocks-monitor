@@ -18,11 +18,13 @@ export {
 
 export { 
   useCreateStockPositionMutation,
-  useGetStockPositionsQuery
+  useGetStockPositionsQuery,
+  useGetStockPositionQuery,
 } from "./model/services/stockPositionApi";
 
 export { setModalData } from "./model/slice/stockPositionSlice";
 export { getIsModalOpen } from "./model/selectors/getIsModalOpen/getIsModalOpen";
+export { getStockPositionId } from "./model/selectors/getStockPositionId/getStockPositionId";
 
 export {
   stockPositionReducer

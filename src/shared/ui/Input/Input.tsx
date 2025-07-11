@@ -11,6 +11,7 @@ interface InputProps extends HTMLInputProps {
   value?: string | number;
   hasError?: boolean;
   errorMessage?: string;
+  disabled?: boolean;
 }
 
 export const Input = (props: InputProps) => {
@@ -21,6 +22,7 @@ export const Input = (props: InputProps) => {
     errorMessage,
     onChange,
     onFocus,
+    disabled,
     ...otherProps
   } = props;
 
@@ -41,6 +43,7 @@ export const Input = (props: InputProps) => {
       <input 
         onChange={onChangeHandler} 
         onFocus={onFocusHandler}
+        disabled={disabled}
         className={styles.input}
         value={value} 
         {...otherProps}

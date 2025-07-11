@@ -31,6 +31,12 @@ export const stockPositionApi = createApi({
       },
       providesTags: ["StockPositions"],
     }),
+    getStockPosition: build.query<StockPosition, number | undefined>({ 
+      query: (id: number) => `stock_positions/${id}`,
+      transformResponse: (response: StockPosition) => {
+        return objectKeySerializer(response, ObjectSerializerMode.snakeToCamel) as StockPosition;
+      },
+    }),
     createStockPosition: build.mutation<StockPosition, NewStockPosition>({
       query: (body) => ({
         url: "stock_positions",
@@ -44,5 +50,6 @@ export const stockPositionApi = createApi({
 
 export const { 
   useGetStockPositionsQuery,
+  useGetStockPositionQuery,
   useCreateStockPositionMutation
 } = stockPositionApi;
