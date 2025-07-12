@@ -35,7 +35,6 @@ export const Autocomplete = (props: AutocompleteProps) => {
   );
 
   const onChangeHandler = (value: string) => {
-    console.warn("Autocomplete change")
     setQuery(value);
     setIsElementVisible(true);
   }

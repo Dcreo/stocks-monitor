@@ -5,7 +5,7 @@ import * as styles from "./StockPositionTable.module.scss";
 import { IStockPositionTable, StockPosition, StockPositionCellMode, StockPositionFormType } from "../../model/types/StockPosition";
 import { AgGridReact } from 'ag-grid-react';
 import { useState } from "react";
-import { ColDef } from "ag-grid-community";
+import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import { StockPositionCell } from "../StockPositionCell/StockPositionCell";
 import { useSelector } from "react-redux";
 import { getIsModalOpen } from "../../model/selectors/getIsModalOpen/getIsModalOpen";
@@ -14,6 +14,7 @@ import { useAppDispatch } from "@/shared/hooks";
 import { setModalData } from "../../model/slice/stockPositionSlice";
 import { StockPositionModal } from "../StockPositionModal/StockPositionModal";
 import { getFormType } from "../../model/selectors/getFormType/getFormType";
+import { ECurrency } from "@/entities/Currency";
 
 interface IStockPositionTableProps {
   className?: string;
@@ -29,12 +30,13 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
   const isModalOpen = useSelector(getIsModalOpen);
   const formType = useSelector(getFormType);
   const dispatch = useAppDispatch();
+  const [currency, setCurrency] = useState<ECurrency>(ECurrency.USD)
 
   const [columns, setColumns] = useState<ColDef<IStockPositionTable>[]>([
     { 
       field: "stock.name", 
       flex: 2,
-      minWidth: 300,
+      width: 300,
       // suppressSizeToFit: true,
       // suppressAutoSize: true,
     },
@@ -47,13 +49,26 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
       field: "stocksNumber",
       width: 150,
     },
-    { field: "averagePrice" },
-    { field: "currentCost"},
-    { field: "baseCost"},
-    { field: "profit"},
+    { 
+      field: "averagePrice", 
+      width: 130,
+    },
+    { 
+      field: "currentCost",
+      width: 120,
+    },
+    { 
+      field: "baseCost",
+      width: 120,
+    },
+    { 
+      field: "profit",
+      width: 100,
+    },
     {
       field: "percents",
       headerName: "%",
+      width: 70,
       valueFormatter: params => params.value + " %"
     },
     { 
@@ -71,6 +86,15 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
   const extraColumns = () => {
     return columns.map((o) => ({ 
       ...o, 
+      ...([
+        "stock.price",
+        "averagePrice",
+        "currentCost",
+        "baseCost",
+        "profit",
+      ].includes(o.field!) && {
+        valueFormatter: (params: ValueFormatterParams) => params.value + " " + currency
+      }),
       cellClass: styles.cell 
     }))
   }
