@@ -10,6 +10,8 @@ export interface StockPosition {
   averagePrice?: number;
   baseCost?: number;
   currentCost?: number;
+  profit?: number;
+  percents?: number;
   stock?: Stock;
 }
 

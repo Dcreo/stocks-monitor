@@ -31,17 +31,34 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
   const dispatch = useAppDispatch();
 
   const [columns, setColumns] = useState<ColDef<IStockPositionTable>[]>([
-    { field: "stock.name", flex: 2 },
+    { 
+      field: "stock.name", 
+      flex: 2,
+      minWidth: 300,
+      // suppressSizeToFit: true,
+      // suppressAutoSize: true,
+    },
     { 
       field: "stock.price",
+      width: 100,
       headerName: "Price", 
     },
-    { field: "stocksNumber" },
+    { 
+      field: "stocksNumber",
+      width: 150,
+    },
     { field: "averagePrice" },
     { field: "currentCost"},
     { field: "baseCost"},
+    { field: "profit"},
+    {
+      field: "percents",
+      headerName: "%",
+      valueFormatter: params => params.value + " %"
+    },
     { 
       field: "id",
+      width: 100,
       headerName: "actions",
       cellRenderer: (props: any) => {
         return <StockPositionCell 
