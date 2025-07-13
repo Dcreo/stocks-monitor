@@ -26,8 +26,12 @@ export const StockDetailsModal = ({ className }: StockDetailsProps) => {
 
   return(
     <div className={classNames(styles.StockDetails, {}, [className])}>
-      <Modal isOpen={modal?.isOpen} onClose={onCloseHandler} >
-        { id }
+      <Modal 
+        isOpen={modal?.isOpen} 
+        onClose={onCloseHandler}>
+        <div className={styles.container}>
+          { id }
+        </div>
       </Modal>
     </div>
   )

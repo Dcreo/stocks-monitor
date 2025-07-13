@@ -35,7 +35,7 @@ export enum StockPositionFormType {
 // Store Schema
 export interface IStockPositionStateSchema {
   isModalOpen?: boolean;
-  stockPositionId?: number;
+  stockPosition?: StockPosition;
   formType?: StockPositionFormType;
 }
 

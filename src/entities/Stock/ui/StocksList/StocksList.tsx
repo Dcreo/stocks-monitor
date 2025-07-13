@@ -21,7 +21,7 @@ export const StocksList = ({ className, stocks }: StocksListProps) => {
       field: "position.id",
       headerName: "Position",
       cellRenderer: (props: any) => { 
-        return <StockPositionCell id={props.value} />
+        return <StockPositionCell />
       }
     }
   ]);

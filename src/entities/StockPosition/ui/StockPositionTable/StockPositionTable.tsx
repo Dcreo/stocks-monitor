@@ -84,7 +84,7 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
       headerName: "actions",
       cellRenderer: (props: any) => {
         return <StockPositionCell 
-                 id={props.value}
+                 data={props?.data}
                  mode={StockPositionCellMode.EDITABLE} />
       }
     },
