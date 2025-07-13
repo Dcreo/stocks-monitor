@@ -1,1 +1,1 @@
-export { ECurrency } from "./model/types/Currency";
+export { ECurrencySymbol } from "./model/types/Currency";

@@ -43,7 +43,6 @@ export const CreateStockPositionForm = (props: CreateStockPositionFormProps) => 
   }
 
   const onAveragePriceChangeHandler = (averagePrice: string) => {
-    console.warn(Number(averagePrice))
     if (!isNumber(Number(averagePrice))) return
     setStockPosition({ ...stockPosition, averagePrice: Number(averagePrice)})
   }

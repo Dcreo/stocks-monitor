@@ -2,7 +2,13 @@ import { classNames } from "@/shared/lib";
 import * as styles from "./StockPositionTable.module.scss";
 // import "ag-grid-community/styles/ag-grid.css"
 // import "ag-grid-community/styles/ag-theme-quartz.css";
-import { IStockPositionTable, StockPosition, StockPositionCellMode, StockPositionFormType } from "../../model/types/StockPosition";
+import { 
+  EStockPositionTableFields as Fields, 
+  IStockPositionTable, 
+  StockPosition, 
+  StockPositionCellMode, 
+  StockPositionFormType 
+} from "../../model/types/StockPosition";
 import { AgGridReact } from 'ag-grid-react';
 import { useState } from "react";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
@@ -14,7 +20,7 @@ import { useAppDispatch } from "@/shared/hooks";
 import { setModalData } from "../../model/slice/stockPositionSlice";
 import { StockPositionModal } from "../StockPositionModal/StockPositionModal";
 import { getFormType } from "../../model/selectors/getFormType/getFormType";
-import { ECurrency } from "@/entities/Currency";
+import { ECurrencySymbol } from "@/entities/Currency";
 
 interface IStockPositionTableProps {
   className?: string;
@@ -30,49 +36,47 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
   const isModalOpen = useSelector(getIsModalOpen);
   const formType = useSelector(getFormType);
   const dispatch = useAppDispatch();
-  const [currency, setCurrency] = useState<ECurrency>(ECurrency.USD)
+  const [currency, setCurrency] = useState<ECurrencySymbol>(ECurrencySymbol.USD)
 
   const [columns, setColumns] = useState<ColDef<IStockPositionTable>[]>([
     { 
-      field: "stock.name", 
+      field: Fields.STOCK_NAME, 
       flex: 2,
       width: 300,
-      // suppressSizeToFit: true,
-      // suppressAutoSize: true,
     },
     { 
-      field: "stock.price",
+      field: Fields.STOCK_PRICE,
       width: 100,
       headerName: "Price", 
     },
     { 
-      field: "stocksNumber",
+      field: Fields.STOCKS_NUMBER,
       width: 150,
     },
     { 
-      field: "averagePrice", 
+      field: Fields.AVERAGE_PRICE, 
       width: 130,
     },
     { 
-      field: "currentCost",
+      field: Fields.CURRENT_COST,
       width: 120,
     },
     { 
-      field: "baseCost",
+      field: Fields.BASE_COST,
       width: 120,
     },
     { 
-      field: "profit",
-      width: 100,
+      field: Fields.PROFIT,
+      width: 120,
     },
     {
-      field: "percents",
+      field: Fields.PERCENTS,
       headerName: "%",
       width: 70,
       valueFormatter: params => params.value + " %"
     },
     { 
-      field: "id",
+      field: Fields.ID,
       width: 100,
       headerName: "actions",
       cellRenderer: (props: any) => {
@@ -87,12 +91,12 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
     return columns.map((o) => ({ 
       ...o, 
       ...([
-        "stock.price",
-        "averagePrice",
-        "currentCost",
-        "baseCost",
-        "profit",
-      ].includes(o.field!) && {
+        Fields.STOCK_PRICE,
+        Fields.AVERAGE_PRICE,
+        Fields.CURRENT_COST,
+        Fields.BASE_COST,
+        Fields.PROFIT,
+      ].includes(o.field as Fields) && {
         valueFormatter: (params: ValueFormatterParams) => params.value + " " + currency
       }),
       cellClass: styles.cell 

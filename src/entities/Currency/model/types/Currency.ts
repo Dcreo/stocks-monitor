@@ -1,3 +1,3 @@
-export enum ECurrency {
+export enum ECurrencySymbol {
   USD = "$",
 }

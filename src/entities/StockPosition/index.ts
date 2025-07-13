@@ -11,6 +11,7 @@ export {
   type EditableStockPosition,
   type IStockPositionTable,
   type IStockPositionStateSchema,
+  type EStockPositionTableFields,
   FormFields,
   StockPositionValidationMessages,
   StockPositionCellMode,

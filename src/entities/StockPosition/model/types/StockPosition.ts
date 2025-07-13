@@ -55,3 +55,16 @@ export type NewStockPosition = Pick<StockPosition, "stockId" | "stocksNumber" | 
 
 // Type for editable Stock Position object
 export type EditableStockPosition = Pick<StockPosition, "id" | "stocksNumber" | "averagePrice">
+
+// Table fields
+export enum EStockPositionTableFields {
+  STOCK_NAME = "stock.name",
+  STOCK_PRICE = "stock.price",
+  STOCKS_NUMBER = "stocksNumber",
+  AVERAGE_PRICE = "averagePrice",
+  CURRENT_COST = "currentCost",
+  BASE_COST = "baseCost",
+  PROFIT = "profit",
+  PERCENTS = "percents",
+  ID = "id"
+}
