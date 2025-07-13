@@ -12,7 +12,7 @@ import {
 import { AgGridReact } from 'ag-grid-react';
 import { useState } from "react";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
-import { StockPositionCell } from "../StockPositionCell/StockPositionCell";
+import { StockPositionCell } from "../StockPositionTable/StockPositionCell/StockPositionCell";
 import { useSelector } from "react-redux";
 import { getIsModalOpen } from "../../model/selectors/getIsModalOpen/getIsModalOpen";
 import { Modal } from "@/shared/ui";
@@ -21,6 +21,8 @@ import { setModalData } from "../../model/slice/stockPositionSlice";
 import { StockPositionModal } from "../StockPositionModal/StockPositionModal";
 import { getFormType } from "../../model/selectors/getFormType/getFormType";
 import { ECurrencySymbol } from "@/entities/Currency";
+import { StockPositionNameCell } from "./StockPositionNameCell/StockPositionNameCell";
+import { StockDetailsModal } from "@/entities/Stock/ui/StockDetailsModal/StockDetailsModal";
 
 interface IStockPositionTableProps {
   className?: string;
@@ -43,6 +45,7 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
       field: Fields.STOCK_NAME, 
       flex: 2,
       width: 300,
+      cellRenderer: StockPositionNameCell 
     },
     { 
       field: Fields.STOCK_PRICE,
@@ -116,6 +119,7 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
         rowHeight={50}
       /> 
 
+      <StockDetailsModal />
       <StockPositionModal 
         isOpen={isModalOpen} 
         formType={formType}

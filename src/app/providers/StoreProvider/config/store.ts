@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 // TODO root paths
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { stocksApi } from "@/entities/Stock";
+import { stockReducer, stocksApi } from "@/entities/Stock";
 import { StateSchema } from "./StateSchema";
 import { jwtAuthReducer } from "@/features/auth/jwt";
 import { usersApi } from "@/entities/User";
@@ -15,6 +15,7 @@ const store = configureStore<StateSchema>({
     //@ts-ignore
     jwtAuth: jwtAuthReducer,   
     stockPosition: stockPositionReducer,
+    stock: stockReducer,
     [stocksApi.reducerPath]: stocksApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [jwtAuthApi.reducerPath]: jwtAuthApi.reducer,

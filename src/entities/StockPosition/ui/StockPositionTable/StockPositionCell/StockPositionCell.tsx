@@ -4,11 +4,14 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
 import { classNames } from "@/shared/lib";
 import * as styles from "./StockPositionCell.module.scss";
-import { StockPositionCellMode, StockPositionFormType } from "../../model/types/StockPosition";
+import { 
+  StockPositionCellMode, 
+  StockPositionFormType 
+} from "../../../model/types/StockPosition";
 import { CiEdit } from "react-icons/ci";
 import { Modal } from "@/shared";
 import { useAppDispatch } from "@/shared/hooks";
-import { setModalData } from "../../model/slice/stockPositionSlice";
+import { setModalData } from "../../../model/slice/stockPositionSlice";
 
 
 interface StockPositionCellProps {

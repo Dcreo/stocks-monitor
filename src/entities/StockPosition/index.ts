@@ -2,8 +2,9 @@ import stockPositionReducer from "./model/slice/stockPositionSlice";
 
 export { StockPositionModal } from "./ui/StockPositionModal/StockPositionModal";
 export { StockPositionTable } from "./ui/StockPositionTable/StockPositionTable";
-export { StockPositionCell } from "./ui/StockPositionCell/StockPositionCell";
+export { StockPositionCell } from "./ui/StockPositionTable/StockPositionCell/StockPositionCell";
 export { EditStockPositionForm } from "./ui/Forms/EditStockPositionForm/EditStockPositionForm";
+export { StockPositionNameCell } from "./ui/StockPositionTable/StockPositionNameCell/StockPositionNameCell";
 
 export { 
   type StockPosition, 
