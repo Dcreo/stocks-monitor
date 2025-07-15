@@ -5,6 +5,7 @@ export { StockPositionTable } from "./ui/StockPositionTable/StockPositionTable";
 export { StockPositionCell } from "./ui/StockPositionTable/StockPositionCell/StockPositionCell";
 export { EditStockPositionForm } from "./ui/Forms/EditStockPositionForm/EditStockPositionForm";
 export { StockPositionNameCell } from "./ui/StockPositionTable/StockPositionNameCell/StockPositionNameCell";
+export { CapitalStatistic } from "./ui/CapitalStatistic/CapitalStatistic";
 
 export { 
   type StockPosition, 
@@ -12,6 +13,7 @@ export {
   type EditableStockPosition,
   type IStockPositionTable,
   type IStockPositionStateSchema,
+  type ICapitalStatistic,
   type EStockPositionTableFields,
   FormFields,
   StockPositionValidationMessages,
@@ -22,6 +24,7 @@ export {
 export { 
   useGetStockPositionsQuery,
   useGetStockPositionQuery,
+  useGetCapitalStatisticQuery,
   useCreateStockPositionMutation,
   useUpdateStockPositionMutation,
 } from "./model/services/stockPositionApi";

@@ -3,6 +3,7 @@ import { classNames } from "@/shared/lib";
 import * as styles from "./StockPositionsPage.module.scss";
 import { StockPositionModal, StockPositionTable } from "@/entities/StockPosition";
 import { useGetStockPositionsQuery } from "@/entities/StockPosition";
+import { CapitalStatistic } from "@/entities/StockPosition";
 
 interface StockPositionsPageProps {
   className?: string
@@ -20,6 +21,8 @@ export const StockPositionsPage = ({ className }: StockPositionsPageProps) => {
         className={styles.link}>
         Add stock position
       </span> 
+
+      <CapitalStatistic className={styles.capitalStatistic} />
 
       <StockPositionModal 
         isOpen={createModalIsOpen} 

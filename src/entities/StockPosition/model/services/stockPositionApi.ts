@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { EditableStockPosition, NewStockPosition, StockPosition } from "../types/StockPosition";
+import { EditableStockPosition, ICapitalStatistic, NewStockPosition, StockPosition } from "../types/StockPosition";
 import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
 import { StateSchema } from "@/app/providers";
 import { response } from "express";
@@ -59,6 +59,12 @@ export const stockPositionApi = createApi({
       invalidatesTags: (result, error, arg) => (
         [{type: "StockPositions"}, { type: "StockPosition", id: arg.id }]
       )
+    }),
+    getCapitalStatistic: build.query<ICapitalStatistic, void>({
+      query: () => `stock_positions/capital_statistic`,
+      transformResponse: (response: ICapitalStatistic) => {
+        return objectKeySerializer(response, ObjectSerializerMode.snakeToCamel) as ICapitalStatistic;
+      },
     })
   })
 })
@@ -66,6 +72,7 @@ export const stockPositionApi = createApi({
 export const { 
   useGetStockPositionsQuery,
   useGetStockPositionQuery,
+  useGetCapitalStatisticQuery,
   useCreateStockPositionMutation,
   useUpdateStockPositionMutation,
 } = stockPositionApi;

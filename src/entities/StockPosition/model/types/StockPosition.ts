@@ -68,3 +68,12 @@ export enum EStockPositionTableFields {
   PERCENTS = "percents",
   ID = "id"
 }
+
+// Capital Statistic types
+export interface ICapitalStatistic {
+  baseCapital?: number;
+  currentCapital?: number;
+  profit?: number;
+  percents?: number;
+  profitFromSales?: number;
+}

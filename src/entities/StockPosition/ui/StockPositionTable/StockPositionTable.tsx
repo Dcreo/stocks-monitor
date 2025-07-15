@@ -75,7 +75,7 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
     {
       field: Fields.PERCENTS,
       headerName: "%",
-      width: 70,
+      width: 85,
       valueFormatter: params => params.value + " %"
     },
     { 
