@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react";
 import { classNames } from "@/shared/lib";
 import * as styles from "./StockDetailsModal.module.scss";
-import { Modal } from "@/shared/ui";
+import { EModalTheme, Modal } from "@/shared/ui";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks";
 import { getStockId } from "../../model/selectors/getStockId/getStockId";
 import { getStockModal } from "../../model/selectors/getStockModal/getStockModal";
-import { setModalData } from "@/entities/Stock";
+import { EStockModalType, setModalData, Stock } from "@/entities/Stock";
 import { useGetStockQuery } from "../../services/stocksApi";
-import { useEffect } from "react";
 
 interface StockDetailsProps {
   className?: string
@@ -15,14 +15,17 @@ interface StockDetailsProps {
 export const StockDetailsModal = ({ className }: StockDetailsProps) => {
   const dispatch = useAppDispatch();
 
+  const [stock, setStock] = useState<Stock>();
+
   const id = useAppSelector(getStockId);
   const modal = useAppSelector(getStockModal);
 
-  const {data: stock, refetch} = useGetStockQuery(id, {
-    skip: !id
+  const {data} = useGetStockQuery(id, {
+    skip: !id,
   });
 
   const onCloseHandler = () => {
+    setStock({} as Stock);
     dispatch(setModalData({
       modal: {
         isOpen: false
@@ -30,14 +33,22 @@ export const StockDetailsModal = ({ className }: StockDetailsProps) => {
     }))
   }
 
+  useEffect(() => {
+    console.warn("set stock")
+    if (!!data?.id) setStock(data);
+  }, [data?.id]);
+
   return(
     <div className={classNames(styles.StockDetails, {}, [className])}>
       <Modal 
         isOpen={modal?.isOpen} 
+        theme={EModalTheme.FULLSCREEN}
         onClose={onCloseHandler}>
-        <div className={styles.container}>
-          <h1>{ stock?.name }&nbsp;[{ id }]</h1>
-        </div>
+        {!!stock?.id && (
+          <div className={styles.container}>
+            <h1>{ stock?.name }&nbsp;[{ id }]</h1>
+          </div>
+        )}
       </Modal>
     </div>
   )

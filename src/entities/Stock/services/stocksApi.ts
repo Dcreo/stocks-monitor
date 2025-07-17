@@ -23,9 +23,12 @@ export const stocksApi = createApi({
     }),
     getStock: build.query<Stock, number | undefined>({
       query: (id) => "stocks/" + id,
+      // keepUnusedDataFor: 0,
       transformResponse: (response: Stock) => {
         return objectKeySerializer(response, ObjectSerializerMode.snakeToCamel) as Stock;
       },
+      // @ts-ignore
+      providesTags: (response, error, id) => [{ type: "Stock", id }]
     })
   })
 })

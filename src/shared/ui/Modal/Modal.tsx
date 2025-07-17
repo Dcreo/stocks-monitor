@@ -1,12 +1,19 @@
 import { memo, ReactNode, MouseEvent } from "react";
+import { RiCloseLargeFill } from "react-icons/ri";
 import { classNames, Mods } from "@/shared/lib";
 import * as styles from "./Modal.module.scss";
+
+export enum EModalTheme {
+  FULLSCREEN = "fullscreen",
+  DEFAULT = "default",
+}
 
 interface ModalProps {
   className?: string;
   children?: ReactNode; 
   isOpen?: boolean;
   onClose?: () => void;
+  theme?: EModalTheme;
   lazy?: boolean;
 }
 
@@ -15,6 +22,7 @@ export const Modal = (props: ModalProps) => {
     isOpen, 
     className, 
     children,
+    theme = EModalTheme.DEFAULT,
     lazy = true,
     onClose,
   } = props;
@@ -26,6 +34,8 @@ export const Modal = (props: ModalProps) => {
   
   const mods: Mods = {
     [styles.closed]: !isOpen,
+    // @ts-ignore
+    [styles[theme]]: !!true
   } 
 
   if (lazy && !isOpen) return null;
@@ -35,6 +45,9 @@ export const Modal = (props: ModalProps) => {
       <div className={styles.overlay} onClick={onCloseHandler}>
         <div className={styles.content} onClick={(e) => e.stopPropagation()}>
           {children}
+          <div className={styles.closeElement} onClick={onCloseHandler}>
+            <RiCloseLargeFill />
+          </div>
         </div>
       </div>
     </div>
