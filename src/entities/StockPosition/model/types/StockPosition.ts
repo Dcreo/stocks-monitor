@@ -58,6 +58,7 @@ export type EditableStockPosition = Pick<StockPosition, "id" | "stocksNumber" | 
 
 // Table fields
 export enum EStockPositionTableFields {
+  STOCK_TICKER = "stock.ticker",
   STOCK_NAME = "stock.name",
   STOCK_PRICE = "stock.price",
   STOCKS_NUMBER = "stocksNumber",

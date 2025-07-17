@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Stock } from "../model/types/Stock";
 import { StateSchema } from "@/app/providers";
+import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
 
 export const stocksApi = createApi({
   reducerPath: "stocksApi",
@@ -19,8 +20,17 @@ export const stocksApi = createApi({
   endpoints: (build) => ({
     getStocks: build.query<Stock[], void>({ 
       query: () => "stocks"
+    }),
+    getStock: build.query<Stock, number | undefined>({
+      query: (id) => "stocks/" + id,
+      transformResponse: (response: Stock) => {
+        return objectKeySerializer(response, ObjectSerializerMode.snakeToCamel) as Stock;
+      },
     })
   })
 })
 
-export const { useGetStocksQuery } = stocksApi;
+export const { 
+  useGetStocksQuery,
+  useGetStockQuery,
+} = stocksApi;

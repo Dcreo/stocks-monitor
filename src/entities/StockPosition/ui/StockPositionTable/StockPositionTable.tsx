@@ -47,6 +47,12 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
       width: 300,
       cellRenderer: StockPositionNameCell 
     },
+    {
+      field: Fields.STOCK_TICKER,
+      width: 100,
+      headerName: "Ticker",
+      valueFormatter: params => params.value.toUpperCase()
+    },
     { 
       field: Fields.STOCK_PRICE,
       width: 100,
