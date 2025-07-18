@@ -1,0 +1,25 @@
+.DetailsContainer {
+  padding: 0px 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  /**/
+}
+
+.content {
+  display: flex;
+}
+
+.leftPart {
+  border: 1px solid;
+  width: 70%;
+  padding: 10px;
+}
+
+.rightPart {
+  border: 1px solid;
+  width: 30%;
+  padding: 10px;
+}
