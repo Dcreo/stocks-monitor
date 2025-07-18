@@ -7,6 +7,8 @@ import {
   Stock, 
   useGetStockQuery 
 } from "@/entities/Stock";
+import { TextLine } from "@/shared/ui";
+import { ECurrencySymbol } from "@/entities/Currency";
 
 interface DetailsContainerProps {
   className?: string
@@ -40,7 +42,13 @@ export const DetailsContainer = ({ className }: DetailsContainerProps) => {
               Left part
             </div>
             <div className={styles.rightPart}>
-              Right Part
+              <div className={styles.price}>
+                <TextLine value={stock?.price} label="Price" symbol={ECurrencySymbol.USD}/>
+              </div>
+              <div className={styles.info}>
+                <TextLine value={stock?.ticker?.toUpperCase()} label="Ticker" />
+                <TextLine value={stock?.exchange} label="Exchange" />
+              </div>
             </div>
           </div>
         </>
