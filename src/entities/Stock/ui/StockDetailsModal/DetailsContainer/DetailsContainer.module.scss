@@ -2,6 +2,7 @@
   padding: 0px 25px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .header {
@@ -10,18 +11,22 @@
 
 .content {
   display: flex;
+  height: 100%;
+  margin-bottom: 20px;
 }
 
 .leftPart {
-  border: 1px solid;
-  width: 70%;
+  // border: 1px solid;
+  width: 80%;
   padding: 10px;
+  position: relative;
 }
 
 .rightPart {
-  border: 1px solid;
-  width: 30%;
+  // border: 1px solid;
+  width: 20%;
   padding: 10px;
+  position: relative;
 }
 
 .price {

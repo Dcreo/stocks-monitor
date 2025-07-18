@@ -9,6 +9,7 @@ import {
 } from "@/entities/Stock";
 import { TextLine } from "@/shared/ui";
 import { ECurrencySymbol } from "@/entities/Currency";
+import { TradingViewChart } from "@/widgets/TradingViewChart";
 
 interface DetailsContainerProps {
   className?: string
@@ -39,7 +40,7 @@ export const DetailsContainer = ({ className }: DetailsContainerProps) => {
           </div>
           <div className={styles.content}>
             <div className={styles.leftPart}>
-              Left part
+              <TradingViewChart ticker={stock?.ticker} exchange={stock?.exchange} />
             </div>
             <div className={styles.rightPart}>
               <div className={styles.price}>
