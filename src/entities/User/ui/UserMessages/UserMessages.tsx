@@ -6,7 +6,7 @@ import { TbMailOpened } from "react-icons/tb";
 
 
 import * as styles from "./UserMessages.module.scss";
-import { IMessage, useGetUserMessagesQuery } from "@/entities/Message";
+import { IMessage, Message, useGetUserMessagesQuery } from "@/entities/Message";
 import { useState } from "react";
 import { useElementVisible } from "@/shared/hooks";
 
@@ -60,14 +60,7 @@ export const UserMessages = ({ className }: UserMessagesProps) => {
 
       {!!isOpen && !!isElementVisible && (
         <div className={styles.container} ref={ref}>
-          {messages?.map((message: IMessage) => {
-            return(
-              <div className={styles.message} key={message.id}>
-                <div className={styles.messageTitle}>{message.title}</div>
-                <div className={styles.messageText}>{message.text}</div>
-              </div>
-            )
-          })}
+          {messages?.map((message: IMessage) => <Message message={message} />)}
         </div>
       )}
     </div>

@@ -1,0 +1,19 @@
+.Message {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0,0,0, 0.2);
+  }
+}
+
+.messageTitle {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.messageText {
+  /**/
+}

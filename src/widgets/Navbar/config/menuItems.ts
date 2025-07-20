@@ -5,7 +5,10 @@ export interface IMenuItem {
   path: RoutePath;
 }
 
-export type MenuRouteName = Exclude<RouteName, RouteName.NOT_FOUND>
+export type MenuRouteName = Exclude<RouteName,
+  RouteName.NOT_FOUND |
+  RouteName.USER_MESSAGE
+>
 
 export const menuItems: Record<MenuRouteName, IMenuItem> = {
   [RouteName.ROOT]: {
@@ -24,4 +27,8 @@ export const menuItems: Record<MenuRouteName, IMenuItem> = {
     text: "Stock Positions",
     path: RoutePath.STOCK_POSITIONS
   },
+  [RouteName.USER_MESSAGES]: {
+    text: "Messages",
+    path: RoutePath.USER_MESSAGES
+  }
 }
