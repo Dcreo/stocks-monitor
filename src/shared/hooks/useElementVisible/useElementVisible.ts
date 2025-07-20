@@ -1,7 +1,17 @@
 import React, { useEffect, useRef, useState, MouseEvent } from "react";
 
-export const useElementVisible = (initialVisible: boolean) => {
-  const [isElementVisible, setIsElementVisible] = useState<boolean>(initialVisible);
+export interface IIsElementVisible {
+  initialVisible?: boolean;
+  onClose?: () => void;
+}
+
+export const useElementVisible = (props: IIsElementVisible) => {
+  const {
+    initialVisible,
+    onClose,
+  } = props;
+
+  const [isElementVisible, setIsElementVisible] = useState<boolean>(initialVisible!);
 
   const ref = useRef<any>(null);
 
@@ -9,6 +19,7 @@ export const useElementVisible = (initialVisible: boolean) => {
   const handleClickOutside = (event: any) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setIsElementVisible(false)
+      if (onClose) onClose();
     }
   }
 

@@ -6,22 +6,33 @@ import { TbMailOpened } from "react-icons/tb";
 
 
 import * as styles from "./UserMessages.module.scss";
-import { useGetUserMessagesQuery } from "@/entities/Message";
+import { IMessage, useGetUserMessagesQuery } from "@/entities/Message";
 import { useState } from "react";
+import { useElementVisible } from "@/shared/hooks";
 
 interface UserMessagesProps {
   className?: string;
 }
 
 export const UserMessages = ({ className }: UserMessagesProps) => {
-  const [requestMessages, setRequestMessages] = useState<boolean>(false);
+  const { ref, isElementVisible, setIsElementVisible } = useElementVisible({
+    initialVisible: true,
+    onClose: () => setIsOpen(false),
+  });
 
-  const { data: messages, isError, isLoading, refetch } = useGetUserMessagesQuery(undefined,{
+  const [requestMessages, setRequestMessages] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { data: messages, isError, isLoading, refetch } = useGetUserMessagesQuery({
+    limit: 8,
+  },{
     skip: !requestMessages
   });
 
   const clickIconHandler = () => {
     setRequestMessages(true);
+    setIsOpen(true);
+    setIsElementVisible(true);
 
     setTimeout(() => {
       setRequestMessages(false);
@@ -30,18 +41,34 @@ export const UserMessages = ({ className }: UserMessagesProps) => {
 
   return(
     <div className={classNames(styles.UserMessages, {}, [className])}>
-      <MdOutlineMarkEmailUnread 
-        onClick={clickIconHandler} 
-        className={styles.unreadIcon} />
+      {!isOpen && (
+        <MdOutlineMarkEmailUnread 
+          onClick={clickIconHandler} 
+          className={styles.unreadIcon} />
+      )}
 
-      <HiOutlineMail 
-        className={styles.defaultIcon} />
+      {false && (
+        <HiOutlineMail 
+          className={styles.defaultIcon} />
+      )}
 
-      <TbMailOpened 
-        className={styles.openedIcon} />
+      {!!isOpen && (
+        <TbMailOpened 
+          onClick={() => setIsOpen(false)}
+          className={styles.openedIcon} />
+      )}
 
-      {messages?.length && (
-        <></>
+      {!!isOpen && !!isElementVisible && (
+        <div className={styles.container} ref={ref}>
+          {messages?.map((message: IMessage) => {
+            return(
+              <div className={styles.message} key={message.id}>
+                <div className={styles.messageTitle}>{message.title}</div>
+                <div className={styles.messageText}>{message.text}</div>
+              </div>
+            )
+          })}
+        </div>
       )}
     </div>
   )

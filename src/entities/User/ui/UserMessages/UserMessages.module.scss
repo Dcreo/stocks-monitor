@@ -1,9 +1,41 @@
 .UserMessages {
-  /**/
+  position: relative;
 }
 
 .unreadIcon,
 .defaultIcon,
 .openedIcon {
   cursor: pointer;
+}
+
+.container {
+  position: absolute;
+  right: 0;
+  z-index: 3;
+  background-color: #fff;
+  padding: 20px 10px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0,0,0, 0.2);
+  }
+}
+
+.messageTitle {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.messageText {
+  /**/
 }

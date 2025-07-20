@@ -29,7 +29,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
 
   const [item, setItem] = useState<any>({});
   const [query, setQuery] = useState<string>("");
-  const { ref, isElementVisible, setIsElementVisible } = useElementVisible(true);
+  const { ref, isElementVisible, setIsElementVisible } = useElementVisible({ initialVisible: true });
   const { data: results, refetch } = useSearchQuery(
     { action, query }, 
   );
