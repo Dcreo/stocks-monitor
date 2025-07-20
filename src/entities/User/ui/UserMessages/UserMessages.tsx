@@ -60,7 +60,9 @@ export const UserMessages = ({ className }: UserMessagesProps) => {
 
       {!!isOpen && !!isElementVisible && (
         <div className={styles.container} ref={ref}>
-          {messages?.map((message: IMessage) => <Message message={message} />)}
+          {messages?.map((message: IMessage) => { 
+            return(<Message message={message} onClick={() => setIsOpen(false)} />)
+          })}
         </div>
       )}
     </div>
