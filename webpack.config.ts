@@ -23,6 +23,7 @@ module.exports = (env: any) => {
     optimization: {
       runtimeChunk: 'single',
     },
+    watchOptions: { ignored: /node_modules/ },
     devtool: 'inline-source-map',
     plugins: [
       new HtmlWebpackPlugin({

@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { RouteName, RoutePath } from "@/shared/config";
 import { menuItems, MenuRouteName } from "../config/menuItems";
 import { ReactNode } from "react";
+import { UserMessages } from "@/entities/User";
 
 interface NavbarProps {
   className?: string
@@ -28,14 +29,16 @@ export const Navbar = ({ className }: NavbarProps) => {
       <div className={styles.menu}>
         <MenuItems />
       </div>
-      <div className={styles.userInfo}>
-        <div>
-          { !isLoggedIn ? <LoginModal /> : username }
-        </div>
-        { isLoggedIn && (
-          <div className={styles.logout} onClick={logout}>Logout</div>
-        )}
+      <div>
+        { !isLoggedIn && <LoginModal /> }
       </div>
+      {!!isLoggedIn && (
+        <div className={styles.userInfo}>
+          <UserMessages />
+          { username }
+          <div className={styles.logout} onClick={logout}>Logout</div>
+        </div>
+      )}
     </div>
   )
 }

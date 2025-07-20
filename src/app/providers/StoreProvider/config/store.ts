@@ -9,6 +9,7 @@ import { jwtAuthApi } from "@/features/auth/jwt";
 import { autocompleteApi } from "@/features/autocomplete/model/services/autocompleteApi";
 import { stockPositionApi } from "@/entities/StockPosition/model/services/stockPositionApi";
 import { stockPositionReducer } from "@/entities/StockPosition";
+import { userMessagesApi } from "@/entities/Message";
 
 const store = configureStore<StateSchema>({
   reducer: {
@@ -21,6 +22,7 @@ const store = configureStore<StateSchema>({
     [jwtAuthApi.reducerPath]: jwtAuthApi.reducer,
     [autocompleteApi.reducerPath]: autocompleteApi.reducer,
     [stockPositionApi.reducerPath]: stockPositionApi.reducer,
+    [userMessagesApi.reducerPath]: userMessagesApi.reducer,
   },
   //@ts-ignore
   middleware: (getDefaultMiddleware) => {
@@ -30,6 +32,7 @@ const store = configureStore<StateSchema>({
       jwtAuthApi.middleware,
       autocompleteApi.middleware,
       stockPositionApi.middleware,
+      userMessagesApi.middleware,
     )
   }
 })
