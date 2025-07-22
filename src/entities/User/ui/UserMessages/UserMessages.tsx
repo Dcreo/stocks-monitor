@@ -9,6 +9,8 @@ import * as styles from "./UserMessages.module.scss";
 import { IMessage, Message, useGetUserMessagesQuery } from "@/entities/Message";
 import { useState } from "react";
 import { useElementVisible } from "@/shared/hooks";
+import { RoutePath } from "@/shared/config";
+import { NavLink } from "react-router-dom";
 
 interface UserMessagesProps {
   className?: string;
@@ -39,6 +41,10 @@ export const UserMessages = ({ className }: UserMessagesProps) => {
     }, 400);
   }
 
+  const closeMessages = () => {
+    setIsOpen(false);
+  }
+
   return(
     <div className={classNames(styles.UserMessages, {}, [className])}>
       {!isOpen && (
@@ -54,15 +60,18 @@ export const UserMessages = ({ className }: UserMessagesProps) => {
 
       {!!isOpen && (
         <TbMailOpened 
-          onClick={() => setIsOpen(false)}
+          onClick={closeMessages}
           className={styles.openedIcon} />
       )}
 
       {!!isOpen && !!isElementVisible && (
         <div className={styles.container} ref={ref}>
           {messages?.map((message: IMessage) => { 
-            return(<Message message={message} onClick={() => setIsOpen(false)} />)
+            return(<Message message={message} onClick={closeMessages} />)
           })}
+          <div className={styles.footer}>
+            <NavLink to={RoutePath.USER_MESSAGES} onClick={closeMessages}>View All</NavLink> 
+          </div>
         </div>
       )}
     </div>
