@@ -13,8 +13,11 @@ export const UserMessagesPage = ({ className }: UserMessagesPageProps) => {
     <div className={classNames(styles.UserMessagesPage, {}, [className])}>
       <h1>Messages</h1>
 
-      {messages?.length && (
-        messages.map((message: IMessage) => <Message message={message} />))}
+      <div className={styles.container}>
+        {messages?.length && (
+          messages.map((message: IMessage) => <Message message={message} />)
+        )}
+      </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 export { 
   useGetUserMessagesQuery,
+  useGetUserMessageQuery,
   userMessagesApi
 } from "./model/services/messagesApi";
 

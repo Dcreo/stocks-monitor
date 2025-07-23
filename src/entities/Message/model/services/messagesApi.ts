@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IMessage, IUserMessagesParams } from "../../model/types/Message";
 import { StateSchema } from "@/app/providers";
+import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
 
 export const userMessagesApi = createApi({
   reducerPath: "userMessagesApi",
@@ -19,14 +20,24 @@ export const userMessagesApi = createApi({
   endpoints: (build) => ({
     getUserMessages: build.query<IMessage[], IUserMessagesParams>({
       query: (params) => ({
-        url: "users/messages",
+        url: "messages",
         params 
       }),
+      keepUnusedDataFor: 0
+    }),
+    getUserMessage: build.query<IMessage, string>({
+      query: (id) => ({
+        url: "messages/" + id,
+      }),
+      transformResponse: (response: IMessage) => {
+        return objectKeySerializer(response, ObjectSerializerMode.snakeToCamel) as IMessage;
+      },
       keepUnusedDataFor: 0
     })
   })
 })
 
 export const { 
-  useGetUserMessagesQuery
+  useGetUserMessagesQuery,
+  useGetUserMessageQuery
 } = userMessagesApi;

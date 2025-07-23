@@ -27,6 +27,7 @@ export const Message = (props: MessageProps) => {
     <div 
       className={classNames(styles.Message, {}, [className])} 
       onClick={onMessageClickHandler}>
+      <span className={!!message?.read ? styles.read : styles.unread}></span>
       <div className={styles.messageTitle}>{message.title}</div>
       <div className={styles.messageText}>{message.text}</div>
     </div>
