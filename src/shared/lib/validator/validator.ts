@@ -5,13 +5,10 @@ export enum ValidatorRules {
   IS_NUMBER = "is_number"
 }
 
-export enum ValidatorErrors {
-  EMPTY = "EMPTY",
-  NOT_NUMBER = "NOT_NUMBER"
-}
+export type TValidatorMessages = Record<keyof ValidatorRules, string>
 
 interface DynamicValueData {
-  errors: ValidatorErrors[];
+  errors: ValidatorRules[];
 }
 
 interface IEnum {
@@ -22,7 +19,7 @@ export class Validator {
   data : any;
   value: any;
   rules: ValidatorRules[];
-  errors: ValidatorErrors[];
+  errors: ValidatorRules[];
   // TODO correct type definition for dynamic fields
   [index: string]: any;
   
@@ -45,21 +42,32 @@ export class Validator {
       switch(rule) {
         case ValidatorRules.REQUIRED: {
           if (!this.data[value]) {
-            this.setValidatorErrors(this.value, ValidatorErrors.EMPTY);
+            this.setValidatorErrors(this.value, ValidatorRules.REQUIRED);
           }
         }
 
         case ValidatorRules.IS_NUMBER: {
           if (!isNumber(this.data[value])) {
-            this.setValidatorErrors(this.value, ValidatorErrors.NOT_NUMBER);
+            this.setValidatorErrors(this.value, ValidatorRules.IS_NUMBER);
           }
         }
       }
     })
   }
 
-  setValidatorErrors(value: any, key: ValidatorErrors) {
+  setValidatorErrors(value: any, key: ValidatorRules) {
     this[value].errors.push(key);
-    this[value].messages.push(this.messages[key]);
+    this[value].messages.push(this.messages[value][key]);
+  }
+
+  hasErrors() {
+    console.warn("VALIDATE OBJECT:", this);
+    let hasErrors: boolean = false;
+
+    Object.keys(this).map((key) => {
+      hasErrors = !!this[key]?.errors?.length;
+    })
+
+    return hasErrors;
   }
 }

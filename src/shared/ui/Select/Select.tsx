@@ -1,5 +1,7 @@
 import { ChangeEvent } from "react";
-import { classNames } from "@/shared/lib";
+import { 
+  classNames, 
+} from "@/shared/lib";
 import * as styles from "./Select.module.scss";
 
 interface SelectProps {

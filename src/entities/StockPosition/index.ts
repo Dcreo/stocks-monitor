@@ -34,6 +34,8 @@ export { setModalData } from "./model/slice/stockPositionSlice";
 export { getIsModalOpen } from "./model/selectors/getIsModalOpen/getIsModalOpen";
 export { getStockPosition } from "./model/selectors/getStockPosition/getStockPosition";
 
+export { StockPositionValidatorOptions } from "./model/validator/options";
+
 export {
   stockPositionReducer
 }

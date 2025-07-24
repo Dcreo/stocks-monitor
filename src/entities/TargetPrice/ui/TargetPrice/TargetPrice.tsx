@@ -1,10 +1,19 @@
-import { classNames } from "@/shared/lib";
+import { 
+  classNames, 
+  Validator, 
+  ValidatorRules as VRules,
+} from "@/shared/lib";
 import * as styles from "./TargetPrice.module.scss";
 import { Stock } from "@/entities/Stock";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Input, Select } from "@/shared/ui";
-import { ETargetPriceDirection } from "../../model/types/TargetPrice";
+import { 
+  ETargetPriceDirection, 
+  ITargetPrice, 
+  ITargetPriceValidationMessages, 
+} from "../../model/types/TargetPrice";
 import { TargetPriceDirectionSelect } from "../TargetPriceDirectionSelect/TargetPriceDirectionSelect";
+import { useTermitValidator } from "@/shared/hooks";
 
 interface TargetPriceProps {
   className?: string;
@@ -12,10 +21,23 @@ interface TargetPriceProps {
 }
 
 export const TargetPrice = ({ className }: TargetPriceProps) => {
-  const [newTargetPrice, setNewTargetPrice] = useState<boolean>(false);
-
+  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [targetPrice, setTargetPrice] = useState<ITargetPrice>({} as ITargetPrice);
+  
+  // TODO types for validator
+  const { validator } = useTermitValidator<ITargetPrice>(targetPrice, {
+    messages: {
+      "price": {
+        [VRules.REQUIRED]: "Price field is required"
+      } 
+    },
+    rules: {
+      "price": [VRules.REQUIRED]
+    }
+  })
+  
   const addTargetPriceHandler = () => {
-    setNewTargetPrice(prev => !prev);
+    setFormOpen(prev => !prev);
   }
 
   const saveTargetPriceHandler = () => {
@@ -26,25 +48,33 @@ export const TargetPrice = ({ className }: TargetPriceProps) => {
     console.warn(value)
   }
 
+  const onPriceChange = (value: string) => {
+    setTargetPrice({...targetPrice, ...{ price: Number(value) }})
+  }
+  
   return(
     <div className={classNames(styles.TargetPrice, {}, [className])}>
       <h1>Targets</h1>
-      {!newTargetPrice && (
+      {!formOpen && (
         <Button onClick={addTargetPriceHandler}>
           Add 
         </Button>
       )}
 
-      {!!newTargetPrice && (
+      {!!formOpen && (
         <div className={styles.fields}>
-          <Input placeholder={"Target price"} />
+          <Input 
+            placeholder={"Target price"} 
+            hasError={validator?.price?.errors?.length} 
+            onChange={onPriceChange}
+            errorMessage={validator?.price?.messages[0]} />
           <TargetPriceDirectionSelect onChange={onDirectionChange} />
         </div>
       )}
         
-      {!!newTargetPrice && (
+      {!!formOpen && (
         <div className={styles.actions}>
-          <Button onClick={saveTargetPriceHandler}>
+          <Button onClick={saveTargetPriceHandler} disabled={validator.hasErrors()}>
             Save
           </Button>
           <Button onClick={addTargetPriceHandler} className={styles.cancelButton}>

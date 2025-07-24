@@ -1,16 +1,12 @@
 import * as styles from "./CreateStockPositionForm.module.scss";
 import { useEffect, useState } from "react";
-import { 
-  classNames, 
-  isNumber, 
-  Validator, 
-  ValidatorRules as VRules
-} from "@/shared/lib";
+import { classNames, isNumber, } from "@/shared/lib";
 import { Autocomplete } from "@/features/autocomplete";
 import { Stock } from "@/entities/Stock";
-import { StockPosition, StockPositionValidationMessages } from "@/entities/StockPosition";
+import { StockPosition, StockPositionValidatorOptions } from "@/entities/StockPosition";
 import { Button, Input } from "@/shared/ui";
 import { useCreateStockPositionMutation } from "@/entities/StockPosition";
+import { useTermitValidator } from "@/shared/hooks";
 
 interface CreateStockPositionFormProps {
   className?: string;
@@ -27,12 +23,8 @@ export const CreateStockPositionForm = (props: CreateStockPositionFormProps) => 
   const [stockPosition, setStockPosition] = useState<StockPosition>({});
   const [createStockPosition, { isSuccess, isLoading }] = useCreateStockPositionMutation()
 
-  // TODO move validator to hooks
-  const [validator] = useState<Validator>(
-    new Validator(StockPositionValidationMessages)
-  );
-  const [touchValidator, setTouchValidator] = useState<boolean>(false);
-  
+  const { validator } = useTermitValidator<StockPosition>(stockPosition, StockPositionValidatorOptions)
+
   const onStockChangeHandler = (stock: Stock) => {
     setStock(stock);
     setStockPosition({...stockPosition,  stockId: stock.id})
@@ -47,29 +39,9 @@ export const CreateStockPositionForm = (props: CreateStockPositionFormProps) => 
     setStockPosition({ ...stockPosition, averagePrice: Number(averagePrice)})
   }
 
-  const validate = () => {
-    validator.call(stockPosition, "stockId", 
-      [VRules.REQUIRED]
-    );
-    
-    validator.call(stockPosition, "stocksNumber", 
-      [VRules.REQUIRED, VRules.IS_NUMBER]
-    );
-
-    validator.call(stockPosition, "averagePrice", 
-      [VRules.REQUIRED]
-    );
-
-    setTouchValidator(prev => !prev)
-  }
-
   const createStockPositionHandler = () => {
     createStockPosition(stockPosition);
   }
-
-  useEffect(() => {
-    validate(); 
-  }, [stockPosition]);
 
   useEffect(() => {
     if (!!isSuccess && onSuccess) onSuccess(); 
@@ -110,7 +82,7 @@ export const CreateStockPositionForm = (props: CreateStockPositionFormProps) => 
       </div>
 
       <Button 
-        disabled={isLoading} 
+        disabled={isLoading || validator.hasErrors()} 
         onClick={createStockPositionHandler}
         className={styles.button}>
         Add Stock Position

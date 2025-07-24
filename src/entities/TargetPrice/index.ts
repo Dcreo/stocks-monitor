@@ -1,6 +1,8 @@
 export { 
   type ITargetPrice,
-  type ETargetPriceDirection
+  type ETargetPriceDirection,
+  type TTargetPriceRules,
+  type TTargetPriceKeys 
 } from "./model/types/TargetPrice";
 
 export { TargetPrice } from "./ui/TargetPrice/TargetPrice";

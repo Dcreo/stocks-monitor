@@ -14,22 +14,20 @@ export const TargetPriceDirectionSelect = (props: TargetPriceDirectionSelectProp
     onChange,
   } = props;
 
-  const directions = () => {
-    return [
-      {
-        value: ETargetPriceDirection.ABOVE,
-        name: "Above"
-      },
-      {
-        value: ETargetPriceDirection.BELOW,
-        name: "Below"
-      }
-    ]
-  }
+  const directions = [
+    {
+      value: ETargetPriceDirection.ABOVE,
+      name: "Price is higher"
+    },
+    {
+      value: ETargetPriceDirection.BELOW,
+      name: "Price is lower"
+    }
+  ]
 
   return(
     <div className={classNames(styles.TargetPriceDirectionSelect, {}, [className])}>
-      <Select items={directions()} onChange={onChange} />
+      <Select items={directions} onChange={onChange} />
     </div>
   )
 }
