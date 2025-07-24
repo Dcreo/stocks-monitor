@@ -12,7 +12,7 @@ import {
 import { AgGridReact } from 'ag-grid-react';
 import { useState } from "react";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
-import { StockPositionCell } from "../StockPositionTable/StockPositionCell/StockPositionCell";
+import { StockPositionActionsCell } from "../StockPositionTable/StockPositionActionsCell/StockPositionActionsCell";
 import { useSelector } from "react-redux";
 import { getIsModalOpen } from "../../model/selectors/getIsModalOpen/getIsModalOpen";
 import { Modal } from "@/shared/ui";
@@ -89,7 +89,7 @@ export const StockPositionTable = (props: IStockPositionTableProps) => {
       width: 100,
       headerName: "actions",
       cellRenderer: (props: any) => {
-        return <StockPositionCell 
+        return <StockPositionActionsCell 
                  data={props?.data}
                  mode={StockPositionCellMode.EDITABLE} />
       }

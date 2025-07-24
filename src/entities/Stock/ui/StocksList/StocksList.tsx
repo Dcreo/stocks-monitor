@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { classNames } from "@/shared/lib";
 import * as styles from "./StocksList.module.scss";
 import { Stock } from "../../model/types/Stock";
 import { ColDef } from "ag-grid-community";
 import { MdDoneOutline } from "react-icons/md";
-import { StockPositionCell, StockPositionCellMode } from "@/entities/StockPosition";
+import { StockPositionActionsCell, StockPositionCellMode } from "@/entities/StockPosition";
 
 
 interface StocksListProps {
@@ -21,7 +21,7 @@ export const StocksList = ({ className, stocks }: StocksListProps) => {
       field: "position.id",
       headerName: "Position",
       cellRenderer: (props: any) => { 
-        return <StockPositionCell />
+        return <StockPositionActionsCell />
       }
     }
   ]);

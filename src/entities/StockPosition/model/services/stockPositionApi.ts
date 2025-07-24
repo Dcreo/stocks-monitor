@@ -19,7 +19,7 @@ export const stockPositionApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ["StockPositions"],
+  tagTypes: ["StockPositions", "CapitalStatistic"],
   endpoints: (build) => ({
     getStockPositions: build.query<StockPosition[], void>({ 
       query: () => "stock_positions",
@@ -46,7 +46,14 @@ export const stockPositionApi = createApi({
         method: "POST",
         body: {stock_position: objectKeySerializer(body, ObjectSerializerMode.camelToSnake)}
       }),
-      invalidatesTags: ["StockPositions"]
+      invalidatesTags: ["StockPositions", "CapitalStatistic"]
+    }),
+    deleteStockPosition: build.mutation<StockPosition, number>({
+      query: (id) => ({
+        url: "stock_positions/" + id,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["StockPositions", "CapitalStatistic"]
     }),
     updateStockPosition: build.mutation<StockPosition, EditableStockPosition>({
       query: (body) => ({
@@ -65,6 +72,7 @@ export const stockPositionApi = createApi({
       transformResponse: (response: ICapitalStatistic) => {
         return objectKeySerializer(response, ObjectSerializerMode.snakeToCamel) as ICapitalStatistic;
       },
+      providesTags: ["CapitalStatistic"]
     })
   })
 })
@@ -73,6 +81,7 @@ export const {
   useGetStockPositionsQuery,
   useGetStockPositionQuery,
   useGetCapitalStatisticQuery,
+  useDeleteStockPositionMutation,
   useCreateStockPositionMutation,
   useUpdateStockPositionMutation,
 } = stockPositionApi;
