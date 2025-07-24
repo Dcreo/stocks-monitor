@@ -13,6 +13,7 @@ interface InputProps extends HTMLInputProps {
   errorMessage?: string;
   disabled?: boolean;
   label?: string;
+  placeholder?: string;
 }
 
 export const Input = (props: InputProps) => {

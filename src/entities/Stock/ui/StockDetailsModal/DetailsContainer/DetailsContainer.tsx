@@ -10,6 +10,7 @@ import {
 import { TextLine } from "@/shared/ui";
 import { ECurrencySymbol } from "@/entities/Currency";
 import { TradingViewChart } from "@/widgets/TradingViewChart";
+import { TargetPrice } from "@/entities/TargetPrice";
 
 interface DetailsContainerProps {
   className?: string
@@ -49,6 +50,10 @@ export const DetailsContainer = ({ className }: DetailsContainerProps) => {
               <div className={styles.info}>
                 <TextLine value={stock?.ticker?.toUpperCase()} label="Ticker" />
                 <TextLine value={stock?.exchange} label="Exchange" />
+              </div>
+
+              <div className={styles.targets}>
+                <TargetPrice stock={stock} />
               </div>
             </div>
           </div>
