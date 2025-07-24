@@ -1,3 +1,19 @@
 .TargetPrice {
   /**/
 }
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.cancelButton {
+  margin-left: auto;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

@@ -1,6 +1,6 @@
 export enum ETargetPriceDirection {
-  UP = "UP",
-  DOWN = "DOWN"
+  ABOVE = "above",
+  BELOW = "below"
 }
 
 export interface ITargetPrice {

@@ -2,7 +2,9 @@ import { classNames } from "@/shared/lib";
 import * as styles from "./TargetPrice.module.scss";
 import { Stock } from "@/entities/Stock";
 import { useState } from "react";
-import { Button, Input } from "@/shared/ui";
+import { Button, Input, Select } from "@/shared/ui";
+import { ETargetPriceDirection } from "../../model/types/TargetPrice";
+import { TargetPriceDirectionSelect } from "../TargetPriceDirectionSelect/TargetPriceDirectionSelect";
 
 interface TargetPriceProps {
   className?: string;
@@ -20,6 +22,10 @@ export const TargetPrice = ({ className }: TargetPriceProps) => {
 
   }
 
+  const onDirectionChange = (value: string) => {
+    console.warn(value)
+  }
+
   return(
     <div className={classNames(styles.TargetPrice, {}, [className])}>
       <h1>Targets</h1>
@@ -30,20 +36,21 @@ export const TargetPrice = ({ className }: TargetPriceProps) => {
       )}
 
       {!!newTargetPrice && (
-        <div>
-          <Input placeholder={"Целевая цена"} />
+        <div className={styles.fields}>
+          <Input placeholder={"Target price"} />
+          <TargetPriceDirectionSelect onChange={onDirectionChange} />
         </div>
       )}
         
       {!!newTargetPrice && (
-        <>
+        <div className={styles.actions}>
           <Button onClick={saveTargetPriceHandler}>
             Save
           </Button>
-          <Button onClick={addTargetPriceHandler}>
+          <Button onClick={addTargetPriceHandler} className={styles.cancelButton}>
             Cancel 
           </Button>
-        </>
+        </div>
       )}
     </div>
   )
