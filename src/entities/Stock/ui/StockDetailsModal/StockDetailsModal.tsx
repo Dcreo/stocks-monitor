@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
 import { classNames } from "@/shared/lib";
 import * as styles from "./StockDetailsModal.module.scss";
 import { EModalTheme, Modal } from "@/shared/ui";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks";
-import { getStockId } from "../../model/selectors/getStockId/getStockId";
 import { getStockModal } from "../../model/selectors/getStockModal/getStockModal";
-import { EStockModalType, setModalData, Stock } from "@/entities/Stock";
-import { useGetStockQuery } from "../../services/stocksApi";
+import { setModalData } from "@/entities/Stock";
 import { DetailsContainer } from "./DetailsContainer/DetailsContainer";
 
 interface StockDetailsProps {

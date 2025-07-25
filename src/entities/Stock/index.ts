@@ -1,10 +1,10 @@
 import stockReducer from "./model/slice/stockSlice";
 
-export { stocksApi } from "./services/stocksApi";
+export { stocksApi } from "./model/services/stocksApi";
 export { 
   useGetStocksQuery,
   useGetStockQuery
-} from "./services/stocksApi";
+} from "./model/services/stocksApi";
 export { setModalData } from "./model/slice/stockSlice";
 export { 
   type Stock,

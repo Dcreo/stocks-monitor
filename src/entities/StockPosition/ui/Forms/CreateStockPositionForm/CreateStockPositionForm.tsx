@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { classNames, isNumber, } from "@/shared/lib";
 import { Autocomplete } from "@/features/autocomplete";
 import { Stock } from "@/entities/Stock";
-import { StockPosition, StockPositionValidatorOptions } from "@/entities/StockPosition";
+import { 
+  StockPosition, 
+  StockPositionValidatorOptions as VOptions
+} from "@/entities/StockPosition";
 import { Button, Input } from "@/shared/ui";
 import { useCreateStockPositionMutation } from "@/entities/StockPosition";
 import { useTermitValidator } from "@/shared/hooks";
@@ -23,7 +26,7 @@ export const CreateStockPositionForm = (props: CreateStockPositionFormProps) => 
   const [stockPosition, setStockPosition] = useState<StockPosition>({});
   const [createStockPosition, { isSuccess, isLoading }] = useCreateStockPositionMutation()
 
-  const { validator } = useTermitValidator<StockPosition>(stockPosition, StockPositionValidatorOptions)
+  const { validator } = useTermitValidator<StockPosition>(stockPosition, VOptions)
 
   const onStockChangeHandler = (stock: Stock) => {
     setStock(stock);

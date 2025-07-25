@@ -7,3 +7,5 @@ export {
 
 export { TargetPrice } from "./ui/TargetPrice/TargetPrice";
 export { TargetPriceDirectionSelect } from "./ui/TargetPriceDirectionSelect/TargetPriceDirectionSelect";
+
+export { TargetPriceValidatorOptions } from "./model/validator/options";

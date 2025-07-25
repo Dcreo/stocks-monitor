@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Stock } from "../model/types/Stock";
+import { Stock } from "../../model/types/Stock";
 import { StateSchema } from "@/app/providers";
 import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
 

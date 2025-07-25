@@ -14,6 +14,7 @@ import {
 } from "../../model/types/TargetPrice";
 import { TargetPriceDirectionSelect } from "../TargetPriceDirectionSelect/TargetPriceDirectionSelect";
 import { useTermitValidator } from "@/shared/hooks";
+import { TargetPriceValidatorOptions as VOptions} from "../../model/validator/options";
 
 interface TargetPriceProps {
   className?: string;
@@ -25,16 +26,7 @@ export const TargetPrice = ({ className }: TargetPriceProps) => {
   const [targetPrice, setTargetPrice] = useState<ITargetPrice>({} as ITargetPrice);
   
   // TODO types for validator
-  const { validator } = useTermitValidator<ITargetPrice>(targetPrice, {
-    messages: {
-      "price": {
-        [VRules.REQUIRED]: "Price field is required"
-      } 
-    },
-    rules: {
-      "price": [VRules.REQUIRED]
-    }
-  })
+  const { validator } = useTermitValidator<ITargetPrice>(targetPrice, VOptions);
   
   const addTargetPriceHandler = () => {
     setFormOpen(prev => !prev);
