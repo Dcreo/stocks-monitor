@@ -15,15 +15,24 @@ import {
 import { TargetPriceDirectionSelect } from "../TargetPriceDirectionSelect/TargetPriceDirectionSelect";
 import { useTermitValidator } from "@/shared/hooks";
 import { TargetPriceValidatorOptions as VOptions} from "../../model/validator/options";
+import { useCreateTargetPriceMutation } from "../../model/services/targetPriceApi";
+import { useThemeProps } from "@mui/material/styles";
 
 interface TargetPriceProps {
   className?: string;
   stock: Stock;
 }
 
-export const TargetPrice = ({ className }: TargetPriceProps) => {
+export const TargetPrice = (props: TargetPriceProps) => {
+  const { className, stock } = props
+
   const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [targetPrice, setTargetPrice] = useState<ITargetPrice>({} as ITargetPrice);
+  const [targetPrice, setTargetPrice] = useState<ITargetPrice>({ 
+    stock_id: stock?.id,
+    direction: ETargetPriceDirection.BELOW
+  } as ITargetPrice);
+
+  const [createTargetPrice, { isSuccess: isTargetPriceCreateSuccess }] = useCreateTargetPriceMutation();
   
   // TODO types for validator
   const { validator } = useTermitValidator<ITargetPrice>(targetPrice, VOptions);
@@ -33,16 +42,20 @@ export const TargetPrice = ({ className }: TargetPriceProps) => {
   }
 
   const saveTargetPriceHandler = () => {
-
+    createTargetPrice(targetPrice); 
   }
 
   const onDirectionChange = (value: string) => {
-    console.warn(value)
+    setTargetPrice({...targetPrice, ...{ direction: value as ETargetPriceDirection}})
   }
 
   const onPriceChange = (value: string) => {
     setTargetPrice({...targetPrice, ...{ price: Number(value) }})
   }
+
+  useEffect(() => {
+    setFormOpen(false);
+  }, [isTargetPriceCreateSuccess])
   
   return(
     <div className={classNames(styles.TargetPrice, {}, [className])}>
@@ -66,7 +79,9 @@ export const TargetPrice = ({ className }: TargetPriceProps) => {
         
       {!!formOpen && (
         <div className={styles.actions}>
-          <Button onClick={saveTargetPriceHandler} disabled={validator.hasErrors()}>
+          <Button 
+            onClick={saveTargetPriceHandler} 
+            disabled={validator.hasErrors()}>
             Save
           </Button>
           <Button onClick={addTargetPriceHandler} className={styles.cancelButton}>

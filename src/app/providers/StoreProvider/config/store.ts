@@ -10,6 +10,7 @@ import { autocompleteApi } from "@/features/autocomplete/model/services/autocomp
 import { stockPositionApi } from "@/entities/StockPosition/model/services/stockPositionApi";
 import { stockPositionReducer } from "@/entities/StockPosition";
 import { userMessagesApi } from "@/entities/Message";
+import { targetPriceApi } from "@/entities/TargetPrice";
 
 const store = configureStore<StateSchema>({
   reducer: {
@@ -23,6 +24,7 @@ const store = configureStore<StateSchema>({
     [autocompleteApi.reducerPath]: autocompleteApi.reducer,
     [stockPositionApi.reducerPath]: stockPositionApi.reducer,
     [userMessagesApi.reducerPath]: userMessagesApi.reducer,
+    [targetPriceApi.reducerPath]: targetPriceApi.reducer,
   },
   //@ts-ignore
   middleware: (getDefaultMiddleware) => {
@@ -33,6 +35,7 @@ const store = configureStore<StateSchema>({
       autocompleteApi.middleware,
       stockPositionApi.middleware,
       userMessagesApi.middleware,
+      targetPriceApi.middleware,
     )
   }
 })

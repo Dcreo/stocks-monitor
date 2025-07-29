@@ -11,10 +11,7 @@ export interface ITermitValidator {
 }
 
 export const useTermitValidator = <T>(object: T, { messages, rules }: ITermitValidator): {
-  // TODO correct type for object
-  // object: any;
   validator: Validator;
-  // setTouchValidator: SetStateAction<any>;
 } => {
   const [validator] = useState<Validator>(
     new Validator(messages)
