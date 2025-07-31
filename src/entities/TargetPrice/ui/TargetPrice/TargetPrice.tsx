@@ -1,4 +1,5 @@
 import { 
+    capitalize,
   classNames, 
   Validator, 
   ValidatorRules as VRules,
@@ -6,7 +7,7 @@ import {
 import * as styles from "./TargetPrice.module.scss";
 import { Stock } from "@/entities/Stock";
 import { useEffect, useState } from "react";
-import { Button, Input, Select } from "@/shared/ui";
+import { Arrow, Button, Input, Select, TextLine } from "@/shared/ui";
 import { 
   ETargetPriceDirection, 
   ITargetPrice, 
@@ -15,8 +16,10 @@ import {
 import { TargetPriceDirectionSelect } from "../TargetPriceDirectionSelect/TargetPriceDirectionSelect";
 import { useTermitValidator } from "@/shared/hooks";
 import { TargetPriceValidatorOptions as VOptions} from "../../model/validator/options";
-import { useCreateTargetPriceMutation } from "../../model/services/targetPriceApi";
+import { useCreateTargetPriceMutation, useGetTargetPricesQuery } from "../../model/services/targetPriceApi";
 import { useThemeProps } from "@mui/material/styles";
+import { ECurrencySymbol } from "@/entities/Currency";
+import { EColorizedFields } from "@/shared/ui";
 
 interface TargetPriceProps {
   className?: string;
@@ -29,10 +32,11 @@ export const TargetPrice = (props: TargetPriceProps) => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [targetPrice, setTargetPrice] = useState<ITargetPrice>({ 
     stock_id: stock?.id,
-    direction: ETargetPriceDirection.BELOW
+    direction: ETargetPriceDirection.ABOVE
   } as ITargetPrice);
 
   const [createTargetPrice, { isSuccess: isTargetPriceCreateSuccess }] = useCreateTargetPriceMutation();
+  const {data: targetPrices = {}, isLoading: isTargetPricesLoading} = useGetTargetPricesQuery(stock?.id);
   
   // TODO types for validator
   const { validator } = useTermitValidator<ITargetPrice>(targetPrice, VOptions);
@@ -46,7 +50,7 @@ export const TargetPrice = (props: TargetPriceProps) => {
   }
 
   const onDirectionChange = (value: string) => {
-    setTargetPrice({...targetPrice, ...{ direction: value as ETargetPriceDirection}})
+    setTargetPrice({...targetPrice, direction: value as ETargetPriceDirection})
   }
 
   const onPriceChange = (value: string) => {
@@ -59,7 +63,7 @@ export const TargetPrice = (props: TargetPriceProps) => {
   
   return(
     <div className={classNames(styles.TargetPrice, {}, [className])}>
-      <h1>Targets</h1>
+      <h1>Price targets</h1>
       {!formOpen && (
         <Button onClick={addTargetPriceHandler}>
           Add 
@@ -88,6 +92,39 @@ export const TargetPrice = (props: TargetPriceProps) => {
             Cancel 
           </Button>
         </div>
+      )}
+
+      {!!Object.keys(targetPrices).length && (
+        Object.keys(targetPrices).map((directionGroupName: string, index: number) => {
+          return(
+            <div>
+              <h3>{ capitalize(directionGroupName) }</h3>
+              
+              {Object.keys(targetPrices).length && (
+                <>
+                  {(targetPrices[directionGroupName as keyof typeof targetPrices] as ITargetPrice[])
+                    .map((targetPrice: ITargetPrice, index: number) => {
+                      return(
+                        <div>
+                          <TextLine 
+                            value={targetPrice.price}
+                            colorizedFields={[
+                              EColorizedFields.VALUE
+                            ]}
+                            symbol={ECurrencySymbol.USD}
+                            label={String(index+1)} />
+                            <div>
+                              Delete
+                              Activate
+                            </div>
+                        </div>
+                      )
+                  })}
+                </>
+              )}
+            </div>
+          )
+        })
       )}
     </div>
   )

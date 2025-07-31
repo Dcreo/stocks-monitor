@@ -19,8 +19,9 @@ export const targetPriceApi = createApi({
   }),
   tagTypes: ["TargetPrices"],
   endpoints: (build) => ({
-    getTargetPrices: build.query<ITargetPrice[], void>({ 
-      query: () => "users/target_prices"
+    getTargetPrices: build.query<ITargetPrice[], number>({ 
+      query: (stockId) => "stocks/" + stockId + "/target_prices",
+      providesTags: ["TargetPrices"]
     }),
     createTargetPrice: build.mutation<ITargetPrice, INewTargetPrice>({
       query: (body) => ({
