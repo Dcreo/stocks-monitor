@@ -4,6 +4,7 @@ import * as styles from "./StockPositionsPage.module.scss";
 import { StockPositionModal, StockPositionTable } from "@/entities/StockPosition";
 import { useGetStockPositionsQuery } from "@/entities/StockPosition";
 import { CapitalStatistic } from "@/entities/StockPosition";
+import { EOverflow } from "@/shared/ui/Modal/Modal";
 
 interface StockPositionsPageProps {
   className?: string

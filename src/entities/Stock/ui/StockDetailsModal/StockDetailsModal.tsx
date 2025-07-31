@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks";
 import { getStockModal } from "../../model/selectors/getStockModal/getStockModal";
 import { setModalData } from "@/entities/Stock";
 import { DetailsContainer } from "./DetailsContainer/DetailsContainer";
+import { EOverflow } from "@/shared/ui/Modal/Modal";
 
 interface StockDetailsProps {
   className?: string

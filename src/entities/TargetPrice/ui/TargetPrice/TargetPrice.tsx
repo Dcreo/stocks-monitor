@@ -95,36 +95,38 @@ export const TargetPrice = (props: TargetPriceProps) => {
       )}
 
       {!!Object.keys(targetPrices).length && (
-        Object.keys(targetPrices).map((directionGroupName: string, index: number) => {
-          return(
-            <div>
-              <h3>{ capitalize(directionGroupName) }</h3>
-              
-              {Object.keys(targetPrices).length && (
-                <>
-                  {(targetPrices[directionGroupName as keyof typeof targetPrices] as ITargetPrice[])
-                    .map((targetPrice: ITargetPrice, index: number) => {
-                      return(
-                        <div>
-                          <TextLine 
-                            value={targetPrice.price}
-                            colorizedFields={[
-                              EColorizedFields.VALUE
-                            ]}
-                            symbol={ECurrencySymbol.USD}
-                            label={String(index+1)} />
-                            <div>
-                              Delete
-                              Activate
-                            </div>
-                        </div>
-                      )
-                  })}
-                </>
-              )}
-            </div>
-          )
-        })
+        <div>
+          {Object.keys(targetPrices).map((directionGroupName: string, index: number) => {
+            return(
+              <div>
+                <h3>{ capitalize(directionGroupName) }</h3>
+                
+                {Object.keys(targetPrices).length && (
+                    <>
+                    {(targetPrices[directionGroupName as keyof typeof targetPrices] as ITargetPrice[])
+                      .map((targetPrice: ITargetPrice, index: number) => {
+                        return(
+                          <div>
+                            <TextLine 
+                              value={targetPrice.price}
+                              colorizedFields={[
+                                EColorizedFields.VALUE
+                              ]}
+                              symbol={ECurrencySymbol.USD}
+                              label={String(index+1)} />
+                              <div>
+                                Delete
+                                Activate
+                              </div>
+                          </div>
+                        )
+                    })}
+                  </>
+                )}
+              </div>
+            )
+          })}
+        </div>
       )}
     </div>
   )

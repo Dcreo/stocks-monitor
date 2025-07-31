@@ -7,16 +7,19 @@ import {
   Stock, 
   useGetStockQuery 
 } from "@/entities/Stock";
-import { TextLine } from "@/shared/ui";
+import { Modal, TextLine } from "@/shared/ui";
 import { ECurrencySymbol } from "@/entities/Currency";
 import { TradingViewChart } from "@/widgets/TradingViewChart";
 import { TargetPrice } from "@/entities/TargetPrice";
+import { EOverflow } from "@/shared/ui/Modal/Modal";
 
 interface DetailsContainerProps {
   className?: string
 }
 
 export const DetailsContainer = ({ className }: DetailsContainerProps) => {
+  const [isTargetsModalOpen, setIsTargetsModalOpen] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
 
   const [stock, setStock] = useState<Stock>();
@@ -53,7 +56,17 @@ export const DetailsContainer = ({ className }: DetailsContainerProps) => {
               </div>
 
               <div className={styles.targets}>
-                <TargetPrice stock={stock} />
+                <h1 
+                  onClick={() => setIsTargetsModalOpen(true)} 
+                  className={styles.targetsTitle}>
+                  Targets
+                </h1>
+                <Modal 
+                  isOpen={isTargetsModalOpen} 
+                  overflow={EOverflow.AUTO}
+                  onClose={() => setIsTargetsModalOpen(false)}>
+                  <TargetPrice stock={stock} />
+                </Modal>
               </div>
             </div>
           </div>

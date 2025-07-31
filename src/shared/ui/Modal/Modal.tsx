@@ -8,6 +8,11 @@ export enum EModalTheme {
   DEFAULT = "default",
 }
 
+export enum EOverflow {
+  AUTO = "Auto",
+  UNSET = "Unset"
+}
+
 interface ModalProps {
   className?: string;
   children?: ReactNode; 
@@ -15,6 +20,7 @@ interface ModalProps {
   onClose?: () => void;
   theme?: EModalTheme;
   lazy?: boolean;
+  overflow?: EOverflow;
 }
 
 export const Modal = (props: ModalProps) => {
@@ -24,6 +30,7 @@ export const Modal = (props: ModalProps) => {
     children,
     theme = EModalTheme.DEFAULT,
     lazy = true,
+    overflow = EOverflow.UNSET,
     onClose,
   } = props;
 
@@ -35,15 +42,21 @@ export const Modal = (props: ModalProps) => {
   const mods: Mods = {
     [styles.closed]: !isOpen,
     // @ts-ignore
-    [styles[theme]]: !!true
+    [styles[theme]]: true,
   } 
+
+  const contentMods: Mods = {
+    [styles[`overflow${overflow}`]]: true,
+  }
 
   if (lazy && !isOpen) return null;
 
   return(
     <div className={classNames(styles.Modal, mods, [className])}>
       <div className={styles.overlay} onClick={onCloseHandler}>
-        <div className={styles.content} onClick={(e) => e.stopPropagation()}>
+        <div 
+          className={classNames(styles.content, contentMods, [])} 
+          onClick={(e) => e.stopPropagation()}>
           {children}
           <div className={styles.closeElement} onClick={onCloseHandler}>
             <RiCloseLargeFill />
