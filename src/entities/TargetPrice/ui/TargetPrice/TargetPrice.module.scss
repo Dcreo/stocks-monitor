@@ -24,3 +24,20 @@
 //   max-height: 500px;
 //   overflow: auto;
 // }
+
+.targetPrices {
+  display: flex;
+  gap: 30px;
+}
+
+.directionGroup {
+  flex: 0.5;
+}
+
+.targetPriceItem {
+  display: flex;
+}
+
+.itemActions {
+  margin-left: auto;
+}

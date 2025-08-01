@@ -7,7 +7,7 @@ import {
 import * as styles from "./TargetPrice.module.scss";
 import { Stock } from "@/entities/Stock";
 import { useEffect, useState } from "react";
-import { Arrow, Button, Input, Select, TextLine } from "@/shared/ui";
+import { Arrow, Button, ERenders, Input, Select, TextLine } from "@/shared/ui";
 import { 
   ETargetPriceDirection, 
   ITargetPrice, 
@@ -20,6 +20,7 @@ import { useCreateTargetPriceMutation, useGetTargetPricesQuery } from "../../mod
 import { useThemeProps } from "@mui/material/styles";
 import { ECurrencySymbol } from "@/entities/Currency";
 import { EColorizedFields } from "@/shared/ui";
+import { EOverflow } from "@/shared/ui/Modal/Modal";
 
 interface TargetPriceProps {
   className?: string;
@@ -95,10 +96,10 @@ export const TargetPrice = (props: TargetPriceProps) => {
       )}
 
       {!!Object.keys(targetPrices).length && (
-        <div>
+        <div className={styles.targetPrices}>
           {Object.keys(targetPrices).map((directionGroupName: string, index: number) => {
             return(
-              <div>
+              <div className={styles.directionGroup}>
                 <h3>{ capitalize(directionGroupName) }</h3>
                 
                 {Object.keys(targetPrices).length && (
@@ -106,15 +107,18 @@ export const TargetPrice = (props: TargetPriceProps) => {
                     {(targetPrices[directionGroupName as keyof typeof targetPrices] as ITargetPrice[])
                       .map((targetPrice: ITargetPrice, index: number) => {
                         return(
-                          <div>
+                          <div className={styles.targetPriceItem}>
                             <TextLine 
                               value={targetPrice.price}
+                              renders={[
+                                ERenders.SYMBOL, 
+                                ERenders.VALUE,
+                              ]}
                               colorizedFields={[
                                 EColorizedFields.VALUE
                               ]}
-                              symbol={ECurrencySymbol.USD}
-                              label={String(index+1)} />
-                              <div>
+                              symbol={ECurrencySymbol.USD} />
+                              <div className={styles.itemActions}>
                                 Delete
                                 Activate
                               </div>

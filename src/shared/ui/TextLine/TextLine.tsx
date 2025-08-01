@@ -8,6 +8,12 @@ export enum EColorizedFields {
   SYMBOL = "symbol"
 }
 
+export enum ERenders {
+  LABEL = "labelRender",
+  VALUE = "valueRender",
+  SYMBOL = "symbolRender"
+}
+
 export enum EColors {
   GREEN = "Green"
 }
@@ -19,6 +25,7 @@ interface TextLineProps {
   symbol?: string; 
   colorizedFields?: EColorizedFields[];
   color?: EColors;
+  renders?: ERenders[]; 
 }
 
 export const TextLine = (props: TextLineProps) => {
@@ -28,6 +35,7 @@ export const TextLine = (props: TextLineProps) => {
     value,
     symbol,
     colorizedFields,
+    renders = [ERenders.LABEL, ERenders.VALUE, ERenders.SYMBOL],
     color = EColors.GREEN,
   } = props;
 
@@ -35,17 +43,48 @@ export const TextLine = (props: TextLineProps) => {
     return {[styles[`colorizedFields${color}`]]: !!colorizedFields?.includes(field)}
   }
 
-  return(
-    <div className={classNames(styles.TextLine, {}, [className])}>
+  const labelRender = () => {
+    if (!label?.length) return
+
+    return(
       <div className={classNames(styles.label, colorizedField(EColorizedFields.LABEL))}>
         {label}:
       </div>
+    )
+  }
+
+  const valueRender = () => {
+    return(
       <div className={classNames(styles.value, colorizedField(EColorizedFields.VALUE))}>
         {value}
       </div>
+    )
+  }
+
+  const symbolRender = () => {
+    return(
       <div className={classNames(styles.symbol, colorizedField(EColorizedFields.SYMBOL))}>
         {symbol}
       </div>
+    )
+  }
+
+  const renderAll = () => {
+    const rendersValues = Object.values(renders);
+
+    return [
+      labelRender,
+      valueRender,
+      symbolRender
+    ]
+    .sort((a, b) => rendersValues?.indexOf(a.name as ERenders) - 
+                    rendersValues?.indexOf(b.name as ERenders))
+    .map((render) => render());
+  }
+
+  return(
+    <div className={classNames(styles.TextLine, {}, [className])}>
+      {renderAll()}
     </div>
   )
 }
