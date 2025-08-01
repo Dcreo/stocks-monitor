@@ -38,6 +38,18 @@
   display: flex;
 }
 
-.itemActions {
-  margin-left: auto;
+.table {
+  flex: 1;
+  margin-top: 20px;
+  
+  th {
+    font-size: 20px;
+    text-align: left;
+    padding: 10px 0;
+
+    &:first-child {
+      width: 80%;
+    }
+  }
 }
+

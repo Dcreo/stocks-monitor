@@ -15,7 +15,8 @@ export enum ERenders {
 }
 
 export enum EColors {
-  GREEN = "Green"
+  GREEN = "Green",
+  RED = "Red"
 }
 
 interface TextLineProps {

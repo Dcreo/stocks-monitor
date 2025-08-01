@@ -3,7 +3,8 @@ export {
   type INewTargetPrice,
   type ETargetPriceDirection,
   type TTargetPriceRules,
-  type TTargetPriceKeys 
+  type TTargetPriceKeys ,
+  type TTargetPricesResponse
 } from "./model/types/TargetPrice";
 
 export { TargetPrice } from "./ui/TargetPrice/TargetPrice";

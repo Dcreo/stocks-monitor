@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { INewTargetPrice, ITargetPrice } from "../../model/types/TargetPrice";
+import { ETargetPriceDirection, INewTargetPrice, ITargetPrice, TTargetPricesResponse } from "../../model/types/TargetPrice";
 import { StateSchema } from "@/app/providers";
 import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
 
@@ -19,8 +19,20 @@ export const targetPriceApi = createApi({
   }),
   tagTypes: ["TargetPrices"],
   endpoints: (build) => ({
-    getTargetPrices: build.query<ITargetPrice[], number>({ 
+    getTargetPrices: build.query<TTargetPricesResponse, number>({ 
       query: (stockId) => "stocks/" + stockId + "/target_prices",
+      transformResponse: (response: TTargetPricesResponse) => {
+        const data = {} as TTargetPricesResponse;
+        
+        Object.keys(response).map((group) => {
+          data[group as ETargetPriceDirection] = response[group as ETargetPriceDirection].map((item: ITargetPrice) => {
+            return objectKeySerializer(item, ObjectSerializerMode.snakeToCamel) as ITargetPrice;
+          })
+        })
+        
+        console.warn("DATA", data)
+        return data;
+      },
       providesTags: ["TargetPrices"]
     }),
     createTargetPrice: build.mutation<ITargetPrice, INewTargetPrice>({

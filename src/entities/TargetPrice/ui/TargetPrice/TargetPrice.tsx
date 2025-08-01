@@ -58,6 +58,18 @@ export const TargetPrice = (props: TargetPriceProps) => {
     setTargetPrice({...targetPrice, ...{ price: Number(value) }})
   }
 
+  const colorizedFields = (targetPriceItem: ITargetPrice) => {
+    console.warn("targetPRice", targetPriceItem, !!targetPriceItem?.activatedAt);
+    const colorFields: EColorizedFields[] = []
+
+    if (!!targetPriceItem?.activatedAt) {
+      colorFields.push(EColorizedFields.VALUE)
+    }
+
+    console.warn("colors", colorFields)
+    return colorFields
+  }
+
   useEffect(() => {
     setFormOpen(false);
   }, [isTargetPriceCreateSuccess])
@@ -99,35 +111,47 @@ export const TargetPrice = (props: TargetPriceProps) => {
         <div className={styles.targetPrices}>
           {Object.keys(targetPrices).map((directionGroupName: string, index: number) => {
             return(
-              <div className={styles.directionGroup}>
-                <h3>{ capitalize(directionGroupName) }</h3>
-                
-                {Object.keys(targetPrices).length && (
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>
+                      { capitalize(directionGroupName) }
+                    </th>
+                    <th>
+                      Actions 
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.keys(targetPrices).length && (
                     <>
-                    {(targetPrices[directionGroupName as keyof typeof targetPrices] as ITargetPrice[])
-                      .map((targetPrice: ITargetPrice, index: number) => {
-                        return(
-                          <div className={styles.targetPriceItem}>
-                            <TextLine 
-                              value={targetPrice.price}
-                              renders={[
-                                ERenders.SYMBOL, 
-                                ERenders.VALUE,
-                              ]}
-                              colorizedFields={[
-                                EColorizedFields.VALUE
-                              ]}
-                              symbol={ECurrencySymbol.USD} />
-                              <div className={styles.itemActions}>
-                                Delete
-                                Activate
-                              </div>
-                          </div>
-                        )
-                    })}
-                  </>
-                )}
-              </div>
+                      {(targetPrices[directionGroupName as keyof typeof targetPrices] as ITargetPrice[])
+                        .map((targetPriceItem: ITargetPrice, index: number) => {
+                          return(
+                            <tr>
+                              <td>
+                                <TextLine 
+                                  value={targetPriceItem.price}
+                                  renders={[
+                                    ERenders.SYMBOL, 
+                                    ERenders.VALUE,
+                                  ]}
+                                  colorizedFields={colorizedFields(targetPriceItem)}
+                                  symbol={ECurrencySymbol.USD} />
+                              </td>
+                              <td>
+                                <div>
+                                  Activate
+                                  Delete
+                                </div>
+                              </td>
+                            </tr>
+                          )
+                      })}
+                    </>
+                  )}
+                </tbody>                
+              </table>
             )
           })}
         </div>
