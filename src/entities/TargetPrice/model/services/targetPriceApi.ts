@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ETargetPriceDirection, INewTargetPrice, ITargetPrice, TTargetPricesResponse } from "../../model/types/TargetPrice";
+import { 
+  ITargetPrice, 
+  ETargetPriceDirection, 
+  TNewTargetPrice, 
+  TEditTargetPrice,
+  TTargetPricesResponse 
+} from "../../model/types/TargetPrice";
 import { StateSchema } from "@/app/providers";
 import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
 
@@ -30,15 +36,23 @@ export const targetPriceApi = createApi({
           })
         })
         
-        console.warn("DATA", data)
         return data;
       },
+      keepUnusedDataFor: 0,
       providesTags: ["TargetPrices"]
     }),
-    createTargetPrice: build.mutation<ITargetPrice, INewTargetPrice>({
+    createTargetPrice: build.mutation<ITargetPrice, TNewTargetPrice>({
       query: (body) => ({
-        url: "stocks/" + body.stock_id + "/target_prices",
+        url: "stocks/" + body.stockId + "/target_prices",
         method: "POST",
+        body: {target_price: objectKeySerializer(body, ObjectSerializerMode.camelToSnake)}
+      }),
+      invalidatesTags: ["TargetPrices"]
+    }),
+    updateTargetPrice: build.mutation<ITargetPrice, TEditTargetPrice>({
+      query: (body) => ({
+        url: "stocks/" + body.stockId + "/target_prices/" + body.id,
+        method: "PUT",
         body: {target_price: objectKeySerializer(body, ObjectSerializerMode.camelToSnake)}
       }),
       invalidatesTags: ["TargetPrices"]
@@ -46,9 +60,8 @@ export const targetPriceApi = createApi({
   })
 })
 
-console.warn("API: ", targetPriceApi)
-
 export const { 
   useGetTargetPricesQuery,
-  useCreateTargetPriceMutation
+  useCreateTargetPriceMutation,
+  useUpdateTargetPriceMutation,
 } = targetPriceApi;

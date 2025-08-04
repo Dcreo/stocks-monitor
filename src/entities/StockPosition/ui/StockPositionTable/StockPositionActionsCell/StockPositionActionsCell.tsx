@@ -34,7 +34,6 @@ export const StockPositionActionsCell = (props: StockPositionCellProps) => {
   const dispatch = useAppDispatch();
 
   const onEditHandler = (): void => {
-    console.warn(data)
     dispatch(setModalData({
       isModalOpen: true,
       stockPosition: data,

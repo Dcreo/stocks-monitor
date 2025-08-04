@@ -61,7 +61,6 @@ export class Validator {
   }
 
   hasErrors() {
-    console.warn("VALIDATE OBJECT:", this);
     let hasErrors: boolean = false;
 
     Object.keys(this).map((key) => {

@@ -10,15 +10,16 @@ export interface ITargetPrice {
   price?: number;
   direction?: ETargetPriceDirection;
   activated?: boolean;
-  stock_id?: number;
+  stockId?: number;
   activatedAt?: Date;
   enabled?: boolean;
 }
 
-export type INewTargetPrice = Pick<ITargetPrice, "price" | "direction" | "activated" | "stock_id">
-export type ITargetPriceValidationMessages = Record<TTargetPriceKeys, TValidatorMessages>
+export type TNewTargetPrice = Pick<ITargetPrice, "price" | "direction" | "activated" | "stockId" | "enabled">;
+export type TEditTargetPrice = TNewTargetPrice & Pick<ITargetPrice, "id">;
+export type ITargetPriceValidationMessages = Record<TTargetPriceKeys, TValidatorMessages>;
 
 export type TTargetPriceKeys = keyof ITargetPrice;
 export type TTargetPricesResponse = Record<ETargetPriceDirection, ITargetPrice[]>;
-export type TTargetPriceRules = Record<TTargetPriceKeys, ValidatorRules[]>
+export type TTargetPriceRules = Record<TTargetPriceKeys, ValidatorRules[]>;
 

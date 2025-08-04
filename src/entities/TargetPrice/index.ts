@@ -1,7 +1,8 @@
 export { 
   type ITargetPrice,
-  type INewTargetPrice,
   type ETargetPriceDirection,
+  type TNewTargetPrice,
+  type TEditTargetPrice,
   type TTargetPriceRules,
   type TTargetPriceKeys ,
   type TTargetPricesResponse
@@ -16,4 +17,5 @@ export {
   targetPriceApi,
   useGetTargetPricesQuery,
   useCreateTargetPriceMutation,
+  useUpdateTargetPriceMutation
 } from "./model/services/targetPriceApi";

@@ -7,7 +7,7 @@ import {
 import * as styles from "./TargetPrice.module.scss";
 import { Stock } from "@/entities/Stock";
 import { useEffect, useState } from "react";
-import { Arrow, Button, ERenders, Input, Select, TextLine } from "@/shared/ui";
+import { Arrow, Button, Checkbox, ERenders, Input, Select, TextLine } from "@/shared/ui";
 import { 
   ETargetPriceDirection, 
   ITargetPrice, 
@@ -16,7 +16,7 @@ import {
 import { TargetPriceDirectionSelect } from "../TargetPriceDirectionSelect/TargetPriceDirectionSelect";
 import { useTermitValidator } from "@/shared/hooks";
 import { TargetPriceValidatorOptions as VOptions} from "../../model/validator/options";
-import { useCreateTargetPriceMutation, useGetTargetPricesQuery } from "../../model/services/targetPriceApi";
+import { useCreateTargetPriceMutation, useGetTargetPricesQuery, useUpdateTargetPriceMutation } from "../../model/services/targetPriceApi";
 import { useThemeProps } from "@mui/material/styles";
 import { ECurrencySymbol } from "@/entities/Currency";
 import { EColorizedFields } from "@/shared/ui";
@@ -32,11 +32,12 @@ export const TargetPrice = (props: TargetPriceProps) => {
 
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [targetPrice, setTargetPrice] = useState<ITargetPrice>({ 
-    stock_id: stock?.id,
+    stockId: stock?.id,
     direction: ETargetPriceDirection.ABOVE
   } as ITargetPrice);
 
   const [createTargetPrice, { isSuccess: isTargetPriceCreateSuccess }] = useCreateTargetPriceMutation();
+  const [updateTargetPrice] = useUpdateTargetPriceMutation();
   const {data: targetPrices = {}, isLoading: isTargetPricesLoading} = useGetTargetPricesQuery(stock?.id);
   
   // TODO types for validator
@@ -59,21 +60,29 @@ export const TargetPrice = (props: TargetPriceProps) => {
   }
 
   const colorizedFields = (targetPriceItem: ITargetPrice) => {
-    console.warn("targetPRice", targetPriceItem, !!targetPriceItem?.activatedAt);
     const colorFields: EColorizedFields[] = []
 
     if (!!targetPriceItem?.activatedAt) {
       colorFields.push(EColorizedFields.VALUE)
     }
 
-    console.warn("colors", colorFields)
     return colorFields
   }
 
+  const onEnabledChangeHandler = (
+    value: boolean, 
+    targetPriceItem: ITargetPrice
+  ) => {
+    console.warn("CHECKKBOX", value)
+    const newData = {...targetPriceItem, ...{ enabled: Boolean(value) }}
+    setTargetPrice(newData);
+    updateTargetPrice(newData);
+  }
+
   useEffect(() => {
-    setFormOpen(false);
+    if (!!isTargetPriceCreateSuccess) setFormOpen(false);
   }, [isTargetPriceCreateSuccess])
-  
+
   return(
     <div className={classNames(styles.TargetPrice, {}, [className])}>
       <h1>Price targets</h1>
@@ -118,6 +127,9 @@ export const TargetPrice = (props: TargetPriceProps) => {
                       { capitalize(directionGroupName) }
                     </th>
                     <th>
+                      Enabled
+                    </th>
+                    <th>
                       Actions 
                     </th>
                   </tr>
@@ -140,8 +152,12 @@ export const TargetPrice = (props: TargetPriceProps) => {
                                   symbol={ECurrencySymbol.USD} />
                               </td>
                               <td>
+                                <Checkbox 
+                                  value={targetPriceItem.enabled}
+                                  onChange={(value) => onEnabledChangeHandler(value, targetPriceItem)} />
+                              </td>
+                              <td>
                                 <div>
-                                  Activate
                                   Delete
                                 </div>
                               </td>

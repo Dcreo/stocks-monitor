@@ -16,7 +16,6 @@ export const jwtAuthApi = createApi({
         }
       },
       transformResponse: (response, meta, arg) => {
-        console.warn("RESPONSE", response);
         if (meta?.response?.status != 200) return response; 
 
         const data: JWTAuthData = {

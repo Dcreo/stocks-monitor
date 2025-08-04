@@ -47,7 +47,6 @@ export const LoginForm = ({ className }: LoginFormProps) => {
 
   useEffect(() => {
     if (authData?.jwtToken) {
-      console.warn('DISPTCH STORE')
       dispatch(setAuthData(authData));
     }
   }, [isLoginSuccess]);
