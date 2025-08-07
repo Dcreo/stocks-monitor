@@ -17,6 +17,7 @@ export interface ITargetPrice {
 
 export type TNewTargetPrice = Pick<ITargetPrice, "price" | "direction" | "activated" | "stockId" | "enabled">;
 export type TEditTargetPrice = TNewTargetPrice & Pick<ITargetPrice, "id">;
+export type TDeleteTargetPrice = Pick<ITargetPrice, "id" | "stockId">;
 export type ITargetPriceValidationMessages = Record<TTargetPriceKeys, TValidatorMessages>;
 
 export type TTargetPriceKeys = keyof ITargetPrice;

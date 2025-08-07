@@ -3,6 +3,7 @@ export {
   type ETargetPriceDirection,
   type TNewTargetPrice,
   type TEditTargetPrice,
+  type TDeleteTargetPrice,
   type TTargetPriceRules,
   type TTargetPriceKeys ,
   type TTargetPricesResponse

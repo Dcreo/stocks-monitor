@@ -16,7 +16,7 @@ import {
 import { TargetPriceDirectionSelect } from "../TargetPriceDirectionSelect/TargetPriceDirectionSelect";
 import { useTermitValidator } from "@/shared/hooks";
 import { TargetPriceValidatorOptions as VOptions} from "../../model/validator/options";
-import { useCreateTargetPriceMutation, useGetTargetPricesQuery, useUpdateTargetPriceMutation } from "../../model/services/targetPriceApi";
+import { useCreateTargetPriceMutation, useDeleteTargetPriceMutation, useGetTargetPricesQuery, useUpdateTargetPriceMutation } from "../../model/services/targetPriceApi";
 import { useThemeProps } from "@mui/material/styles";
 import { ECurrencySymbol } from "@/entities/Currency";
 import { EColorizedFields } from "@/shared/ui";
@@ -38,6 +38,8 @@ export const TargetPrice = (props: TargetPriceProps) => {
 
   const [createTargetPrice, { isSuccess: isTargetPriceCreateSuccess }] = useCreateTargetPriceMutation();
   const [updateTargetPrice] = useUpdateTargetPriceMutation();
+  const [deleteTargetPrice] = useDeleteTargetPriceMutation();
+
   const {data: targetPrices = {}, isLoading: isTargetPricesLoading} = useGetTargetPricesQuery(stock?.id);
   
   // TODO types for validator
@@ -73,10 +75,14 @@ export const TargetPrice = (props: TargetPriceProps) => {
     value: boolean, 
     targetPriceItem: ITargetPrice
   ) => {
-    console.warn("CHECKKBOX", value)
     const newData = {...targetPriceItem, ...{ enabled: Boolean(value) }}
     setTargetPrice(newData);
     updateTargetPrice(newData);
+  }
+
+  const onDeleteTargetPrice = (item: ITargetPrice) => {
+    if (!confirm("Are you sure?")) return
+    deleteTargetPrice({ id: item.id, stockId: item.stockId });
   }
 
   useEffect(() => {
@@ -157,7 +163,9 @@ export const TargetPrice = (props: TargetPriceProps) => {
                                   onChange={(value) => onEnabledChangeHandler(value, targetPriceItem)} />
                               </td>
                               <td>
-                                <div>
+                                <div 
+                                  className={styles.deleteBtn}
+                                  onClick={() => onDeleteTargetPrice(targetPriceItem)}>
                                   Delete
                                 </div>
                               </td>

@@ -4,7 +4,8 @@ import {
   ETargetPriceDirection, 
   TNewTargetPrice, 
   TEditTargetPrice,
-  TTargetPricesResponse 
+  TTargetPricesResponse, 
+  TDeleteTargetPrice
 } from "../../model/types/TargetPrice";
 import { StateSchema } from "@/app/providers";
 import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
@@ -57,6 +58,13 @@ export const targetPriceApi = createApi({
       }),
       invalidatesTags: ["TargetPrices"]
     }),
+    deleteTargetPrice: build.mutation<ITargetPrice, TDeleteTargetPrice>({
+      query: (body) => ({
+        url: "stocks/" + body.stockId + "/target_prices/" + body.id,
+        method: "DELETE"
+      }),
+      invalidatesTags: ["TargetPrices"]
+    }),
   })
 })
 
@@ -64,4 +72,5 @@ export const {
   useGetTargetPricesQuery,
   useCreateTargetPriceMutation,
   useUpdateTargetPriceMutation,
+  useDeleteTargetPriceMutation,
 } = targetPriceApi;
