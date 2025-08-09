@@ -5,6 +5,8 @@ import { StockPositionModal, StockPositionTable } from "@/entities/StockPosition
 import { useGetStockPositionsQuery } from "@/entities/StockPosition";
 import { CapitalStatistic } from "@/entities/StockPosition";
 import { EOverflow } from "@/shared/ui/Modal/Modal";
+import { ExportFormat } from "@/widgets";
+import { EExportFormat } from "@/widgets/ExportFormat";
 
 interface StockPositionsPageProps {
   className?: string
@@ -13,6 +15,10 @@ interface StockPositionsPageProps {
 export const StockPositionsPage = ({ className }: StockPositionsPageProps) => {
   const [createModalIsOpen, setCreateModalIsOpen] = useState<boolean>(false);
   const {data: stockPositions, isError, isLoading} = useGetStockPositionsQuery();
+
+  const onExportFormatClickHandler = (format: EExportFormat) => {
+    console.warn(format)
+  }
 
   return(
     <div className={classNames(styles.StockPositionsPage, {}, [className])}>
@@ -30,11 +36,15 @@ export const StockPositionsPage = ({ className }: StockPositionsPageProps) => {
         onClose={() => setCreateModalIsOpen(false)} />
 
       {!!stockPositions?.length && (
-        <StockPositionTable 
-          stockPositions={stockPositions} 
-          className={styles.table} />
-        )
-      }
+        <>
+          <ExportFormat 
+            onClick={onExportFormatClickHandler}
+            className={styles.exportFormat} />
+          <StockPositionTable 
+            stockPositions={stockPositions} 
+            className={styles.table} />
+        </>
+      )}
     </div>
   )
 }
