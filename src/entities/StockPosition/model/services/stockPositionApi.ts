@@ -3,6 +3,7 @@ import { EditableStockPosition, ICapitalStatistic, NewStockPosition, StockPositi
 import { objectKeySerializer, ObjectSerializerMode } from "@/shared/lib";
 import { StateSchema } from "@/app/providers";
 import { response } from "express";
+import { EExportFormat } from "@/widgets/ExportFormat";
 
 export const stockPositionApi = createApi({
   reducerPath: "stockPositionApi",
@@ -21,6 +22,17 @@ export const stockPositionApi = createApi({
   }),
   tagTypes: ["StockPositions", "CapitalStatistic"],
   endpoints: (build) => ({
+    getStockPositionsDocument: build.query<any, EExportFormat | undefined>({ 
+      query(format) {
+        return {
+          url: `stock_positions.${format}`,
+          method: "GET",
+          responseHandler: async (response) => window.open(window.URL.createObjectURL(await response.blob())),
+          cache: "no-cache",
+        }
+      },
+      providesTags: ["StockPositions"],
+    }),
     getStockPositions: build.query<StockPosition[], void>({ 
       query: () => "stock_positions",
       transformResponse: (response: StockPosition[]) => {
@@ -80,8 +92,10 @@ export const stockPositionApi = createApi({
 export const { 
   useGetStockPositionsQuery,
   useGetStockPositionQuery,
+  useGetStockPositionsDocumentQuery,
   useGetCapitalStatisticQuery,
   useDeleteStockPositionMutation,
   useCreateStockPositionMutation,
   useUpdateStockPositionMutation,
+  useLazyGetStockPositionsDocumentQuery,
 } = stockPositionApi;

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { classNames } from "@/shared/lib";
 import * as styles from "./StockPositionsPage.module.scss";
-import { StockPositionModal, StockPositionTable } from "@/entities/StockPosition";
+import { StockPositionModal, StockPositionTable, useGetStockPositionsDocumentQuery, useLazyGetStockPositionsDocumentQuery } from "@/entities/StockPosition";
 import { useGetStockPositionsQuery } from "@/entities/StockPosition";
 import { CapitalStatistic } from "@/entities/StockPosition";
 import { EOverflow } from "@/shared/ui/Modal/Modal";
@@ -15,9 +15,10 @@ interface StockPositionsPageProps {
 export const StockPositionsPage = ({ className }: StockPositionsPageProps) => {
   const [createModalIsOpen, setCreateModalIsOpen] = useState<boolean>(false);
   const {data: stockPositions, isError, isLoading} = useGetStockPositionsQuery();
+  const [getDocument, { data: StockPositionDocument }] = useLazyGetStockPositionsDocumentQuery()
 
   const onExportFormatClickHandler = (format: EExportFormat) => {
-    console.warn(format)
+    getDocument(format);
   }
 
   return(

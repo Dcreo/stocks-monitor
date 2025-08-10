@@ -25,9 +25,11 @@ export {
   useGetStockPositionsQuery,
   useGetStockPositionQuery,
   useGetCapitalStatisticQuery,
+  useGetStockPositionsDocumentQuery,
   useDeleteStockPositionMutation,
   useCreateStockPositionMutation,
   useUpdateStockPositionMutation,
+  useLazyGetStockPositionsDocumentQuery,
 } from "./model/services/stockPositionApi";
 
 export { setModalData } from "./model/slice/stockPositionSlice";
