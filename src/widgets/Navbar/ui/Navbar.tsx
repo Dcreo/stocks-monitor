@@ -6,6 +6,7 @@ import { RouteName, RoutePath } from "@/shared/config";
 import { menuItems, MenuRouteName } from "../config/menuItems";
 import { ReactNode, useState } from "react";
 import { UserMessages } from "@/entities/User";
+import { MessagesChannel } from "@/features/websockets";
 
 interface NavbarProps {
   className?: string
@@ -26,6 +27,7 @@ export const Navbar = ({ className }: NavbarProps) => {
   
   return(
     <div className={classNames(styles.Navbar, {}, [className])}>
+      <MessagesChannel />
       <div className={styles.menu}>
         <MenuItems />
       </div>

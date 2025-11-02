@@ -1,15 +1,14 @@
-import { classNames } from "@/shared/lib";
-import * as styles from "./MessagesChannel.module.scss";
-import { ReactNode, useState } from "react";
+import { Message } from "@/entities/Message";
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 
 interface MessagesChannelProps {
   className?: string;
-  children: ReactNode;
 }
 
 const ws = new WebSocket("ws://localhost:3000/cable")
 
-export const MessagesChannel = ({ className, children }: MessagesChannelProps) => {
+export const MessagesChannel = ({ className }: MessagesChannelProps) => {
   const [guid, setGuid] = useState("");
   
   ws.onopen = () => {
@@ -35,11 +34,11 @@ export const MessagesChannel = ({ className, children }: MessagesChannelProps) =
     if (data.type === "confirm_subscription") return;
 
     console.warn("DATA", data)
+    toast.info(<Message message={data.message}/>);
   }
 
   return(
-    <div className={classNames(styles.MessagesChannel, {}, [className])}>
-      { children }
-    </div>
+    <>
+    </>
   )
 }

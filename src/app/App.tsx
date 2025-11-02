@@ -4,7 +4,7 @@ import { AppRouter } from "@/app/providers/RouterProvider";
 
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
 import { PriceUpdateProgress } from "@/widgets";
-import { MessagesChannel } from "@/features/websockets";
+import { ToastContainer } from "react-toastify";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -14,10 +14,20 @@ export const App = () => {
 
   return(
     <div>
-      <MessagesChannel>
-        <Navbar />
-      </MessagesChannel>
+      <Navbar />
       <AppRouter />
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   )
 }

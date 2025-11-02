@@ -4,6 +4,8 @@
   padding: 10px 10px 10px 15px;
   cursor: pointer;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 
   &:hover {
     background-color: rgba(0,0,0, 0.2);
