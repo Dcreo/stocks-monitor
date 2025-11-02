@@ -4,7 +4,7 @@ import * as styles from "./Navbar.module.scss";
 import { NavLink } from "react-router-dom";
 import { RouteName, RoutePath } from "@/shared/config";
 import { menuItems, MenuRouteName } from "../config/menuItems";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { UserMessages } from "@/entities/User";
 
 interface NavbarProps {
@@ -23,7 +23,7 @@ export const Navbar = ({ className }: NavbarProps) => {
 
     return items; 
   }
-
+  
   return(
     <div className={classNames(styles.Navbar, {}, [className])}>
       <div className={styles.menu}>

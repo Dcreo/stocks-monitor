@@ -16,6 +16,7 @@ interface UserMessagesProps {
   className?: string;
 }
 
+
 export const UserMessages = ({ className }: UserMessagesProps) => {
   const { ref, isElementVisible, setIsElementVisible } = useElementVisible({
     initialVisible: true,
@@ -44,6 +45,7 @@ export const UserMessages = ({ className }: UserMessagesProps) => {
   const closeMessages = () => {
     setIsOpen(false);
   }
+
 
   return(
     <div className={classNames(styles.UserMessages, {}, [className])}>
