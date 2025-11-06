@@ -37,8 +37,5 @@ export const MessagesChannel = ({ className }: MessagesChannelProps) => {
     toast.info(<Message message={data.message}/>);
   }
 
-  return(
-    <>
-    </>
-  )
+  return(<></>)
 }
