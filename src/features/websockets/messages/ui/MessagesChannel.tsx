@@ -32,6 +32,7 @@ export const MessagesChannel = ({ className }: MessagesChannelProps) => {
     if (data.type === "ping") return;
     if (data.type === "welcome") return;
     if (data.type === "confirm_subscription") return;
+    if (data.type === "disconnect") return;
 
     console.warn("DATA", data)
     toast.info(<Message message={data.message}/>);

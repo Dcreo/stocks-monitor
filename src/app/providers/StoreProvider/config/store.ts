@@ -11,6 +11,7 @@ import { stockPositionApi } from "@/entities/StockPosition/model/services/stockP
 import { stockPositionReducer } from "@/entities/StockPosition";
 import { userMessagesApi } from "@/entities/Message";
 import { targetPriceApi } from "@/entities/TargetPrice";
+import { historyApi } from "@/entities/Histrory";
 
 const store = configureStore<StateSchema>({
   reducer: {
@@ -25,6 +26,7 @@ const store = configureStore<StateSchema>({
     [stockPositionApi.reducerPath]: stockPositionApi.reducer,
     [userMessagesApi.reducerPath]: userMessagesApi.reducer,
     [targetPriceApi.reducerPath]: targetPriceApi.reducer,
+    [historyApi.reducerPath]: historyApi.reducer,
   },
   //@ts-ignore
   middleware: (getDefaultMiddleware) => {
@@ -36,6 +38,7 @@ const store = configureStore<StateSchema>({
       stockPositionApi.middleware,
       userMessagesApi.middleware,
       targetPriceApi.middleware,
+      historyApi.middleware,
     )
   }
 })
